@@ -28,7 +28,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         # 'NAME': os.path.join(LOCAL_STATIC_CDN_PATH, 'dev_monitoring.sqlite'),  # Or path to database file if using sqlite3.
-        'NAME': os.path.join(LOCAL_STATIC_CDN_PATH, 'monitoring.sqlite'),
+        'NAME': os.path.join(BASE_DIR, 'monitoring.sqlite'),
     }
 }
 
@@ -78,24 +78,10 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, "media")
 
 APPEND_SLASH = False
-# OLWIDGET Dependancy
-# YAHOO_APP_ID='XYZ'
-# CLOUDMADE_API_KEY='XYZ'
-# GOOGLE_API_KEY='XYZ' #(no key is required for low request volumes).
+
 
 EXCEL_SUPPORT = 'xlwt'
 
-
-# LEAFLET_CONFIG = {
-#     #'SPATIAL_EXTENT': (17.8, 40.0, 20.8, 45.0),
-#     'DEFAULT_CENTER': (44.0, 17.8),
-#     'DEFAULT_ZOOM': 8,
-#     'MIN_ZOOM': 3,
-#     'MAX_ZOOM': 18,
-#     'SCALE': 'metric',
-#     'MINIMAP': False,
-#     'RESET_VIEW': False
-# }
 
 # Must be enabled in installed_apps.py
 REST_FRAMEWORK = {

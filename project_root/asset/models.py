@@ -49,16 +49,16 @@ class UsedbyPerson(models.Model):
         verbose_name = 'User'
         verbose_name_plural = 'Users'
 
-    def show_image(self):
-        if self.image != '':
-            return '<img project_root="%s" height=70>' % self.image.url
-        else:
-            return 'N/A'
+    # def show_image(self):
+    #     if self.image != '':
+    #         return '<img project_root="%s" height=70>' % self.image.url
+    #     else:
+    #         return 'N/A'
 
-    show_image.allow_tags = True
+    # show_image.allow_tags = True
 
-    def __str__(self):
-        return '%s %s' % (self.first_name, self.last_name)
+    # def __str__(self):
+    #     return '%s %s' % (self.first_name, self.last_name)
 
 
 class Category(models.Model):
@@ -166,13 +166,13 @@ class System(models.Model):
         verbose_name = 'System'
         verbose_name_plural = 'Systems'
 
-    def show_image(self):
-        if self.image != '':
-            return '<img project_root="%s" height=70>' % self.image.url
-        else:
-            return 'N/A'
+    # def show_image(self):
+    #     if self.image != '':
+    #         return '<img project_root="%s" height=70>' % self.image.url
+    #     else:
+    #         return 'N/A'
 
-    show_image.allow_tags = True
+    # show_image.allow_tags = True
 
     def __str__(self):
         return '%s: %s' % (self.dongle, self.location)
@@ -260,7 +260,7 @@ class Periodically(models.Model):
     lastcheck = models.DateField(verbose_name='Last checkup')
     duedate = models.DateField(verbose_name='Next checkup')
 
-    # alarm = models.IntegerField(verbose_name='Alarm', help_text='How many days before expiration Warnings should be risen?')
+    alarm = models.IntegerField(verbose_name='Alarm', blank=True, null=True, help_text='How many days before expiration Warnings should be risen?')
     class Meta:
         db_table = u'periodically'
         verbose_name = 'Checkup'
@@ -299,8 +299,8 @@ class RFmonSite(models.Model):
         verbose_name = 'Monitoring station'
         verbose_name_plural = 'Monitoring stations'
 
-    def warningdate(self):
-        return (self.duedate - datetime.timdelta(days=self.alarm))
+    # def warningdate(self):
+    #     return (self.duedate - datetime.timdelta(days=self.alarm))
 
 
 from django.utils import timezone

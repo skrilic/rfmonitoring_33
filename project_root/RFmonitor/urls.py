@@ -30,6 +30,7 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('logout/', logoutreq, name='logout'),
     path('login/', loginreq, name='login'),
+    path('profile/', update_profile, name='update-profile'),
 
     url(r'^accounts/password/change/$',
         auth_views.PasswordChangeView.as_view(

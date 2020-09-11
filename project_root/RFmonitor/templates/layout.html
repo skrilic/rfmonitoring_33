@@ -53,12 +53,7 @@
       crossorigin="anonymous"
     ></script>
 
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="{% static 'rfdjango/css/site.css' %}"
-    />
-
+    
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
       integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4="
@@ -102,8 +97,14 @@
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
 
-    <link rel="stylesheet" href="{% static 'rfdjango/css/rfmonitor.css' %}" />
-    <script src="{% static 'rfdjango/js/rfmonitor.js' %}"></script>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/site.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/thisproject.css' %}" />
+    <script src="{% static 'js/thisproject.js' %}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/markercluster/MarkerCluster.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/markercluster/MarkerCluster.Default.css' %}" />
+	  <script src="{% static 'js/markercluster/leaflet.markercluster-src.js' %}"></script>
 
     <!-- GOOGLE ANALYTICS -->
     <script>
@@ -250,7 +251,7 @@
               </li>
               {% endif %}
             </ul>
-            {% include 'rfdjango/loginpartial.html' %}
+            {% include 'loginpartial.html' %}
           </div>
         </div>
       </nav>

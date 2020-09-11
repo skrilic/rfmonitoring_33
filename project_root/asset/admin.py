@@ -4,22 +4,22 @@ __date__ = "$11.02.2011. 23:32:20$"
 
 from django.contrib import admin
 
-from asset.models import Office
-# from asset.models import Person
-from asset.models import UsedbyPerson
-from asset.models import Category
-from asset.models import Procurer
-from asset.models import Manufacturer
-# from asset.models import Event
-from asset.models import AssetEvent
-from asset.models import RFmonSiteEvent
-from asset.models import Contract
-from asset.models import Asset
-from asset.models import AssetLog
-from asset.models import Periodically
-from asset.models import System
-from asset.models import RFmonSite
-from asset.models import RFmonSiteLog
+from .models import Office
+# from .models import Person
+from .models import UsedbyPerson
+from .models import Category
+from .models import Procurer
+from .models import Manufacturer
+# from .models import Event
+from .models import AssetEvent
+from .models import RFmonSiteEvent
+from .models import Contract
+from .models import Asset
+from .models import AssetLog
+from .models import Periodically
+from .models import System
+from .models import RFmonSite
+from .models import RFmonSiteLog
 
 
 #
@@ -47,7 +47,14 @@ class OfficeAdmin(admin.ModelAdmin):
 
 
 class UsedbyPersonAdmin(admin.ModelAdmin):
-    list_display = ('id', 'first_name', 'last_name', 'show_image', 'office', 'phone', 'email')
+    list_display = (
+        'id', 
+        'first_name', 
+        'last_name', 
+        'office', 
+        'phone', 
+        'email'
+        )
     inlines = [
         AssetInline,
     ]

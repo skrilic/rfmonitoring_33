@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <form method="post" class="form-horizontal">
+      {% csrf_token %}
+
+        <h4>You can update your profile here</h4>
+                <hr />
+      {{ user_form.as_p }}
+      {{ profile_form.as_p }}
+      <button type="submit">Save changes</button>
+    </form>
+
+{% endblock %}
