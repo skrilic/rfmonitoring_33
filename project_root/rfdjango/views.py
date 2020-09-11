@@ -27,7 +27,8 @@ from .forms import FieldMeasurementForm
 
 def transmitters2json(service):
     """Prepare data about transmitters to be sawn on the geographic map"""
-    tower_list = Towers.objects.values('towerid', 'latitude', 'longitude').all()
+    tower_list = Towers.objects.values(
+        'towerid', 'latitude', 'longitude').all()
     transmitter_list = Transmitter.objects.values(
         'name',
         'frequency',
@@ -65,25 +66,29 @@ def show_txmap(request):
     return render(
         request,
         'rfdjango/txmap.html',
-        context=
-        {
+        context={
             'user': request.user,
             'title': 'Home Page',
             'monitoringStations': serializers.serialize(
                 'json',
-                monitorstanice.objects.only('naziv', 'latitude', 'longitude').filter(aktivna=True),
+                monitorstanice.objects.only(
+                    'naziv', 'latitude', 'longitude').filter(aktivna=True),
                 fields=(
                     'naziv',
                     'latitude',
                     'longitude'
                 )
             ),
-            'bcfmTxs': transmitters2json('BC'),  # FM Radio: name, frequency, longitude, latitude
-            'atvTxs': transmitters2json('BT'),  # Analog. TV: name, frequency, longitude, latitude
-            'amateurTxs': transmitters2json('AT'),  # Amateur Repetitor: name, frequency, longitude, latitude
+            # FM Radio: name, frequency, longitude, latitude
+            'bcfmTxs': transmitters2json('BC'),
+            # Analog. TV: name, frequency, longitude, latitude
+            'atvTxs': transmitters2json('BT'),
+            # Amateur Repetitor: name, frequency, longitude, latitude
+            'amateurTxs': transmitters2json('AT'),
             'mapDefinition': serializers.serialize(
                 'json',
-                MapDefinition.objects.only('map_lat', 'map_lon', 'map_zoom').filter(name='home_page'),
+                MapDefinition.objects.only(
+                    'map_lat', 'map_lon', 'map_zoom').filter(name='home_page'),
                 fields=('map_lat', 'map_lon', 'map_zoom')
             ),
             'year': datetime.datetime.now().year,
@@ -96,14 +101,13 @@ def show_detailmap(request, name, lat, lon):
     return render(
         request,
         'rfdjango/detailmap.html',
-        context=
-            {
-                'user': request.user,
-                'title': name,
-                'name': name,
-                'latitude': lat,
-                'longitude': lon
-            }
+        context={
+            'user': request.user,
+            'title': name,
+            'name': name,
+            'latitude': lat,
+            'longitude': lon
+        }
     )
 
 
@@ -111,8 +115,10 @@ def distance(gps1, gps2):
     """Calculate distance between two gps points."""
     # I've got this code from http://www.androidsnippets.com/calculate-distance-between-two-gps-coordinates
     # Distance=ACOS(SIN(lat1/180*PI)*SIN(lat2/180*PI)+ COS(lat1/180*PI)*COS(lat2/180*PI)*COS(lon1/180*PI-lon2/180*PI))*180*60/PI)
-    lat1, lon1 = float(gps1['latitude']) * math.pi / 180, float(gps1['longitude']) * math.pi / 180
-    lat2, lon2 = float(gps2['latitude']) * math.pi / 180, float(gps2['longitude']) * math.pi / 180
+    lat1, lon1 = float(gps1['latitude']) * math.pi / \
+        180, float(gps1['longitude']) * math.pi / 180
+    lat2, lon2 = float(gps2['latitude']) * math.pi / \
+        180, float(gps2['longitude']) * math.pi / 180
     t1 = math.cos(lat1) * math.cos(lon1) * math.cos(lat2) * math.cos(lon2)
     t2 = math.cos(lat1) * math.sin(lon1) * math.cos(lat2) * math.sin(lon2)
     t3 = math.sin(lat1) * math.sin(lat2)
@@ -122,10 +128,13 @@ def distance(gps1, gps2):
 def bearing(gps1, gps2):
     """Calculate bearing between two gps points"""
     # This code has derived from here http://mathforum.org/library/drmath/view/55417.html
-    lat1, lon1 = float(gps1['latitude']) * math.pi / 180, float(gps1['longitude']) * math.pi / 180
-    lat2, lon2 = float(gps2['latitude']) * math.pi / 180, float(gps2['longitude']) * math.pi / 180
+    lat1, lon1 = float(gps1['latitude']) * math.pi / \
+        180, float(gps1['longitude']) * math.pi / 180
+    lat2, lon2 = float(gps2['latitude']) * math.pi / \
+        180, float(gps2['longitude']) * math.pi / 180
     y = math.sin(lon2 - lon1) * math.cos(lat2)
-    x = math.cos(lat1) * math.sin(lat2) - math.sin(lat1) * math.cos(lat2) * math.cos(lon2 - lon1)
+    x = math.cos(lat1) * math.sin(lat2) - math.sin(lat1) * \
+        math.cos(lat2) * math.cos(lon2 - lon1)
     if y > 0:
         if x > 0:
             bearing_tmp = math.atan(y / x)
@@ -234,4 +243,4 @@ class FieldMeasurementDelete(LoginRequiredMixin, DeleteView):
     login_url = '/login/'
     template_name = 'rfdjango/fieldmeasurement_delete.html'
     model = FieldMeasurement
-    success_url = reverse_lazy('fieldmeasurement_list')
+    success_url = reverse_lazy('rfdjango:fieldmeasurement_list')

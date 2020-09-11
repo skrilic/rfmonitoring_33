@@ -27,8 +27,9 @@ SECRET_KEY = '+%-16!s7xdyp1*h$#ck(%#)y_=n49+t0784d^6hlpd%cap!he7'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        # 'NAME': os.path.join(LOCAL_STATIC_CDN_PATH, 'dev_monitoring.sqlite'),  # Or path to database file if using sqlite3.
-        'NAME': os.path.join(BASE_DIR, 'monitoring.sqlite'),
+        # Or path to database file if using sqlite3.
+        'NAME': os.path.join(LOCAL_STATIC_CDN_PATH, 'monitoring.sqlite'),
+        # 'NAME': os.path.join(BASE_DIR, 'monitoring.sqlite'),
     }
 }
 

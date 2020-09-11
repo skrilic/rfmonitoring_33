@@ -53,7 +53,6 @@
       crossorigin="anonymous"
     ></script>
 
-    
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
       integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4="
@@ -102,9 +101,17 @@
     <link rel="stylesheet" href="{% static 'css/thisproject.css' %}" />
     <script src="{% static 'js/thisproject.js' %}"></script>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'css/markercluster/MarkerCluster.css' %}" />
-    <link rel="stylesheet" type="text/css" href="{% static 'css/markercluster/MarkerCluster.Default.css' %}" />
-	  <script src="{% static 'js/markercluster/leaflet.markercluster-src.js' %}"></script>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/markercluster/MarkerCluster.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/markercluster/MarkerCluster.Default.css' %}"
+    />
+    <script src="{% static 'js/markercluster/leaflet.markercluster-src.js' %}"></script>
 
     <!-- GOOGLE ANALYTICS -->
     <script>
@@ -150,7 +157,7 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">RFdjango</a>
+            <a class="navbar-brand" href="/">RF-DB Manager</a>
           </div>
           <div id="navbar1" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -159,57 +166,55 @@
               {% endif %} {% if user.is_staff %}
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                  >View<b class="caret"></b
+                  >Utils<b class="caret"></b
                 ></a>
 
                 <ul class="dropdown-menu">
                   <li class="dropdown-header">Transmitters</li>
                   <li><a href="/show_txmap/">Show Map</a></li>
                   <li><a href="/licensees/">Licensees</a></li>
-                  <li class="dropdown dropdown-submenu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                      >Services</a
-                    >
 
-                    <ul class="dropdown-menu">
-                      <li><a href="/transmitters/BC/">FM Radio</a></li>
-                      <li><a href="/transmitters/BT/">Analog TV</a></li>
-                      <li><a href="/transmitters/AT/">Radio amateurs</a></li>
-                    </ul>
-                  </li>
                   <li role="separator" class="divider"></li>
 
                   <li class="dropdown-header">Measurements</li>
-
-                  <!-- <li class="dropdown dropdown-submenu">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
-                      >FM Radio (auto)</a
-                    <ul class="dropdown-menu">
-                      <li><a href="/transmitters/fm/">Parameters</a></li>
-                      <li><a href="/transmitters/rds/">RDS</a></li>
-                    </ul> 
-                  </li> -->
 
                   <li class="dropdown dropdown-submenu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                       >Reports</a
                     >
                     <ul class="dropdown-menu">
-                      <li><a href="/rfdjango/fieldmeas/">Journal</a></li>
+                      <li>
+                        <a href="{% url 'rfdjango:fieldmeasurement_list' %}"
+                          >Journal</a
+                        >
+                      </li>
                     </ul>
                   </li>
 
                   <li role="separator" class="divider"></li>
+                </ul>
+              </li>
 
-                  <li class="dropdown-header">Inventory</li>
-
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                  >Inventory<b class="caret"></b
+                ></a>
+                <ul class="dropdown-menu">
                   <li class="dropdown dropdown-submenu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                       >Equipment</a
                     >
                     <ul class="dropdown-menu">
-                      <li><a href="/inventory/">Inventory</a></li>
-                      <li><a href="/inventory/assetslog/">Journal</a></li>
+                      <li>
+                        <a href="{% url 'inventories:asset_list' %}"
+                          >Inventory</a
+                        >
+                      </li>
+                      <li>
+                        <a href="{% url 'inventories:assetlog_list' %}"
+                          >Journal</a
+                        >
+                      </li>
                     </ul>
                   </li>
 
@@ -218,12 +223,21 @@
                       >Monitoring stations</a
                     >
                     <ul class="dropdown-menu">
-                      <li><a href="/inventory/rfmonsite/">List</a></li>
-                      <li><a href="/inventory/rfmslog/">Journal</a></li>
+                      <li>
+                        <a href="{% url 'inventories:rfmonsite_list' %}"
+                          >List</a
+                        >
+                      </li>
+                      <li>
+                        <a href="{% url 'inventories:rfmonsitelog_list' %}"
+                          >Journal</a
+                        >
+                      </li>
                     </ul>
                   </li>
                 </ul>
               </li>
+
               <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown"
                   >Mobile operators<b class="caret"></b
@@ -237,7 +251,7 @@
                     <ul class="dropdown-menu">
                       <li>
                         <a href="{% url 'base_stations:redirect-search' %}"
-                          >All Sites</a
+                          >All</a
                         >
                       </li>
                       <li>
@@ -249,6 +263,73 @@
                   </li>
                 </ul>
               </li>
+
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                  >Broadcasters<b class="caret"></b
+                ></a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown-submenu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                      >FM radio</a
+                    >
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          href="{% url 'rfdjango:transmitter_list' service='BC' %}"
+                          >All</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#">Add</a>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li class="dropdown-submenu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                      >Analog TV</a
+                    >
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          href="{% url 'rfdjango:transmitter_list' service='BT' %}"
+                          >All</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#">Add</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                  >Radio amateurs<b class="caret"></b
+                ></a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown dropdown-submenu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                      >Repetitors</a
+                    >
+
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a
+                          href="{% url 'rfdjango:transmitter_list' service='AT' %}"
+                          >All</a
+                        >
+                      </li>
+                      <li>
+                        <a href="#">Add</a>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+
               {% endif %}
             </ul>
             {% include 'loginpartial.html' %}
@@ -262,7 +343,7 @@
 
       <hr />
       <footer>
-        <p>&copy; 2009 - {{ year }} RF-Django</p>
+        <p>&copy; 2009 - {{ year }} RF-DB Manager</p>
       </footer>
     </div>
 

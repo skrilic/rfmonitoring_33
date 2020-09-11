@@ -1,14 +1,15 @@
-{% extends "layout.html" %}
-{% load rfmonitor_extras %}
-
-{% block content %}
-    <ol class="breadcrumb">
-        <li><span class="glyphicon glyphicon-book"></span><a href="{% url 'fieldmeasurement_list' %}">Measurements journal</a></li>
-    </ol>
-    <h4>New Journal log</h4>
-    <form  class="post-form" enctype="multipart/form-data" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+{% extends "layout.html" %} {% load rfmonitor_extras %} {% block content %}
+<ol class="breadcrumb">
+  <li>
+    <span class="glyphicon glyphicon-book"></span
+    ><a href="{% url 'rfdjango:fieldmeasurement_list' %}"
+      >Measurements journal</a
+    >
+  </li>
+</ol>
+<h4>New Journal log</h4>
+<form class="post-form" enctype="multipart/form-data" method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="save btn btn-default">Save</button>
+</form>
 {% endblock %}

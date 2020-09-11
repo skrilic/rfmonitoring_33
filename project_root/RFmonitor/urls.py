@@ -19,7 +19,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     # #### RFdjango
-    path('', include('rfdjango.urls')),
+    path('', include('rfdjango.urls'), name='rfdjango'),
 
     # #### RF-DB (Mobile base stations)
     path('bts/', include('base_stations.urls'), name='base_stations'),

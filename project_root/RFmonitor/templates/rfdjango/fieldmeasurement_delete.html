@@ -1,9 +1,12 @@
-{% extends "layout.html" %}
-{% block content %}
-    <h4>Delete Measurement</h4>
-    <form  method="POST">
-        {% csrf_token %}
-        <p>Are you sure you want to delete record:<br/> {{ object.date|date:"Y-m-d" }} <br/> {{ object.description|safe|linebreaks }}</p>
-        <input type="submit" class="btn btn-danger" value="delete">
-    </form>
+{% extends "layout.html" %} {% block content %}
+<h4>Delete Measurement</h4>
+<form method="POST">
+  {% csrf_token %}
+  <p>
+    Are you sure you want to delete record:<br />
+    {{ object.date|date:"Y-m-d" }} <br />
+    {{ object.description|safe|linebreaks }}
+  </p>
+  <input type="submit" class="btn btn-danger" value="delete" />
+</form>
 {% endblock %}
