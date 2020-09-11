@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+{% block content %}
+
+    <div class="container">
+        <ol class="breadcrumb">
+            <li><span class="glyphicon glyphicon-book"></span><a href="{% url 'fieldmeasurement_list' %}"> Measurements Journal</a></li>
+            {% if user == fieldmeasurement.author %}
+                <li><span class="glyphicon glyphicon-pencil"></span><a href="{% url 'fieldmeasurement_edit' pk=fieldmeasurement.pk %}">Edit</a></li>
+                <li><span class="glyphicon glyphicon-trash"></span><a href="{% url 'fieldmeasurement_delete' pk=fieldmeasurement.pk %}">Delete</a></li>
+            {% endif %}
+            <li class="active">Details</li>
+        </ol>
+        <div class="row">
+            <div class="card">
+                <div class="card-header">
+                    <b>{{ rfmonsitelog.rfmonsite.office }}</b>
+                </div>
+                <ul class="list-group list-group-flush card-container">
+                    <li class="list-group-item"><b>Status: </b><br>{{ fieldmeasurement.status }}</li>
+                    <li class="list-group-item">
+                        <b>Description: </b><br>{{ fieldmeasurement.description|safe|linebreaks }}
+                        {% if fieldmeasurement.report != None %}
+                            <h4><span class="glyphicon glyphicon-paperclip"></span> {{ fieldmeasurement.report|urlizetrunc:20 }}</h4>
+                        {% else %}
+                            <h4><span class="glyphicon glyphicon-bell text text-nowrap"> </span> No report</h4>
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item">
+                        <b>Date: </b>{{ fieldmeasurement.date|date:"Y-m-d" }}
+                    </li>
+                    <li class="list-group-item"><i>{{ fieldmeasurement.author.first_name }} {{ fieldmeasurement.author.last_name }}</i></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "layout.html" %}
+
+{% block extra_assets %}
+
+{% endblock %}
+
+{% block content %}
+
+<div id="map" style="top: 10px; width: 100%; height: 800px"></div>
+
+<script type="application/javascript">
+    var mapDef = {{ mapDefinition|safe }}[0]['fields'];
+
+    var monitoringStations = {{monitoringStations|safe}};
+    var bcfmStations = {{bcfmTxs|safe}};
+    var atvStations = {{atvTxs|safe}};
+    var amateurStations = {{ amateurTxs|safe }};
+
+    // Creates a red marker with the TV icon
+    var tvMarker = L.AwesomeMarkers.icon({
+        prefix: 'glyphicon',
+        icon: 'facetime-video',
+        iconColor: 'white',
+        markerColor: 'orange'
+    });
+
+    // Creates a red marker with the Audio icon
+    var fmMarker = L.AwesomeMarkers.icon({
+        prefix: 'glyphicon',
+        icon: 'volume-up',
+        iconColor: 'white',
+        markerColor: 'red',
+    });
+
+    // Creates a red marker with the Headphones icon
+    var amateurMarker = L.AwesomeMarkers.icon({
+        prefix: 'glyphicon',
+        icon: 'headphones',
+        iconColor: 'white',
+        markerColor: 'purple'
+    });
+
+
+    var monstations = new L.LayerGroup();
+    monitoringStations.forEach( function (station) {
+        L.marker([station.fields.latitude, station.fields.longitude], {title: station.fields.naziv}).bindPopup(station.fields.naziv).addTo(monstations);
+    });
+
+    var bcfmtransmitters = new L.LayerGroup();
+    bcfmStations.forEach( function (transmitter) {
+            L.marker([transmitter.latitude, transmitter.longitude], {icon: fmMarker}).bindPopup(transmitter.popup).addTo(bcfmtransmitters);
+    });
+
+    var atvtransmitters = new L.LayerGroup();
+    atvStations.forEach( function (transmitter) {
+            L.marker([transmitter.latitude, transmitter.longitude], {icon: tvMarker}).bindPopup(transmitter.popup).addTo(atvtransmitters);
+    });
+
+    var amateurtransmitters = new L.LayerGroup();
+    amateurStations.forEach( function (transmitter) {
+            L.marker([transmitter.latitude, transmitter.longitude], {icon: amateurMarker}).bindPopup(transmitter.popup).addTo(amateurtransmitters);
+    });
+
+    mapLink =
+        '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+
+    var OpenStreetMap_Mapnik = L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; ' + mapLink,
+            maxZoom: 19,
+        });
+
+    var OpenStreetMap_BlackAndWhite = L.tileLayer(
+        'http://{s}.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; ' + mapLink,
+            maxZoom: 18,
+    });
+
+    var OpenTopoMap = L.tileLayer(
+        'http://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
+	    attribution: 'Map data: &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)',
+        maxZoom: 17,
+    });
+
+    var MtbMap = L.tileLayer('http://tile.mtbmap.cz/mtbmap_tiles/{z}/{x}/{y}.png', {
+	    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &amp; USGS'
+    });
+
+    var baseMaps = {
+        "Mapnik": OpenStreetMap_Mapnik,
+        "OpenstreetMap Grayscale": OpenStreetMap_BlackAndWhite,
+        "MtbMap": MtbMap,
+        "Openstreet Topo map": OpenTopoMap
+    };
+
+    var overLays = {
+{#        "Monitoring Stations": monstations,#}
+        "FM Radio Transmitters": bcfmtransmitters,
+        "Analog TV Transmitters": atvtransmitters,
+        "Radio Amateur Repetitors": amateurtransmitters
+    };
+
+
+    var map = L.map('map').setView([mapDef.map_lat, mapDef.map_lon], mapDef.map_zoom, [baseMaps, overLays]);
+    map.addLayer(monstations);
+
+    L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; ' + mapLink,
+            maxZoom: 15,
+        }).addTo(map);
+
+    L.control.layers(baseMaps, overLays, null, {collapsed:false}).addTo(map)
+</script>
+
+{% endblock %}

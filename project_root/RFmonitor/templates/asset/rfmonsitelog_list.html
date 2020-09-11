@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h3><span class="glyphicon glyphicon-book"> Journal</span></h3>
+    <h4><a href="{% url 'inventories:rfmonsitelog_new' %}"><span class="glyphicon glyphicon-plus"> New Journal log</span></a></h4>
+<div class="table-responsive">
+    <table id="myTable" class="display table table-hover">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Monitoring site</th>
+                <th>Event</th>
+                <th class="no-sort">Details</th>
+                <th class="no-sort">Report</th>
+                <th>Author</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        {% for item in rfmonsitelog_list %}
+            <tr>
+                <td>
+                    <a href="{% url 'inventories:rfmonsitelog_detail' pk=item.pk %}">{{ item.datetime|date:"Y-m-d" }}</a>
+                </td>
+                <td>
+                    {{ item.rfmonsite }}
+                </td>
+                <td>
+                    {{ item.logevent }}
+                </td>
+                <td>
+                   {{ item.details|safe }}
+                </td>
+                <td>
+                    {{ item.report|urlize }}
+                </td>
+                <td>
+                    {{ item.author }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

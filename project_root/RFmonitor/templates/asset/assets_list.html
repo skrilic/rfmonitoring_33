@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h2>Equipment</h2>
+    <table id="myTable" class="display table table-hover">
+        <thead>
+        <tr>
+            <th>Product code</th>
+            <th>Description</th>
+            <th>License</th>
+            <th>Serial no.</th>
+            <th>Bar code</th>
+            <th>Used by</th>
+            <th>Location</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        {% for item in object_list %}
+            <tr>
+                <td>
+                    {{ item.prodcode }}
+                </td>
+                <td>
+                    {{ item.description }}
+                </td>
+                <td>
+                    {{ item.license }}
+                </td>
+                <td>
+                    {{ item.serialno }}
+                </td>
+                <td>
+                    {{ item.barcode }}
+                </td>
+                <td>
+                    {{ item.usedby }}
+                </td>
+                <td>
+                    {{ item.location }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

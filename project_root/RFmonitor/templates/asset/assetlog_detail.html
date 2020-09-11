@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+    {% load rfmonitor_extras %}
+
+    <div class="container">
+    <ol class="breadcrumb">
+        <li><span class="glyphicon glyphicon-book"></span><a href="{% url 'inventories:assetlog_list' %}">Journal</a></li>
+        {% if user|has_group:"assets_admin" %}
+            <li><span class="glyphicon glyphicon-pencil"></span><a href="{% url 'inventories:assetlog_edit' pk=assetlog.pk %}">Edit</a></li>
+            <li><span class="glyphicon glyphicon-trash"></span><a href="{% url 'inventories:assetlog_remove' pk=assetlog.pk %}">Delete</a></li>
+        {% endif %}
+        <li class="active">Details</li>
+    </ol>
+        <div class="row">
+            <div class="card">
+                <div class="card-header">
+                    <b>Barcode: </b>{{ object.asset.barcode }}
+                </div>
+                <ul class="list-group list-group-flush card-container">
+                    <li class="list-group-item"><b>Equipment: </b><br>{{ object.asset.description }}</li>
+                    <li class="list-group-item">
+                        <b>Description: </b><br>{{ object.details|safe|linebreaks }}
+                        {% if object.document != None %}
+                            <h4><span class="glyphicon glyphicon-paperclip"></span> {{ object.document|urlizetrunc:20 }}</h4>
+                        {% else %}
+                            <h4><span class="glyphicon glyphicon-bell text text-nowrap"></span> Nothing attached</h4>
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item">
+                        <b>Date: </b>{{ object.datetime|date:"Y-m-d H:i" }}
+                    </li>
+                    <li class="list-group-item"><i>{{ object.asset.usedby }}</i></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

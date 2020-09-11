@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div id="detailmapid"></div>
+     <script>
+        mapLink =
+            '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+        var map = L.map('detailmapid', {
+            center: [
+                {{ latitude }}, {{ longitude }}
+            ],
+            zoom: 13
+           });
+
+        L.marker(
+            [
+                {{ latitude }}, {{ longitude }}
+            ],
+                {title: "{{ name }}" }).bindPopup( "{{ name }}" ).addTo(map);
+
+        L.tileLayer(
+        'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; ' + mapLink,
+            maxZoom: 20,
+        }).addTo(map);
+    </script>
+{% endblock %}

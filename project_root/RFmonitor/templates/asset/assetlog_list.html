@@ -1,0 +1,55 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h3><span class="glyphicon glyphicon-book"></span> Journal</h3>
+    <h4><a href="{% url 'inventories:assetlog_new' %}"><span class="glyphicon glyphicon-plus"></span> New Journal log</a></h4>
+    <div class="table-responsive">
+        <table id="myTable" class="display table table-hover">
+            <thead>
+            <tr>
+                <th>Event date</th>
+                <th>Barcode</th>
+                <th>License</th>
+                <th></th>
+                <th>Event</th>
+                <th>Due date</th>
+                <th class="no-sort">Details</th>
+                <th class="no-sort">Document</th>
+            </tr>
+            </thead>
+            <tbody id="tableBody">
+            {% for item in assetlog_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'inventories:assetlog_detail' pk=item.pk %}">{{ item.datetime|date:"Y-m-d" }}</a>
+                    </td>
+                    <td>
+                        {{ item.asset.barcode }}
+                    </td>
+                    <td>
+                        {{ item.asset.license }}
+                    </td>
+                    <td>
+                        {{ item.asset.description|truncatewords:2 }}<br>
+                        PN:{{ item.asset.prodcode }}<br>
+                        SN:{{ item.asset.serialno }}<br>
+                        ~{{ item.asset.usedby }}~
+                    </td>
+                    <td>
+                        {{ item.logevent.type }}
+                    </td>
+                    <td>
+                        {{ item.expiration|date:"Y-m-d"  }}
+                    </td>
+                    <td>
+                        {{ item.details|safe }}
+                    </td>
+                    <td>
+                        {{ item.document|urlize }}
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

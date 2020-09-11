@@ -1,0 +1,74 @@
+﻿{% extends "layout.html" %}
+{% block content %}
+
+    <div>
+        <h3>
+            {{ title }}
+{#            <a href="{% url 'base_stations:bts-search' address=site show_map=1 %}">{{ site }}</a>#}
+        </h3>
+    </div>
+
+    <table id="myTable" class="display table table-hover">
+        <thead>
+        <tr>
+            <th>Call_sign</th>
+            <th>Adddress</th>
+            <th>MNC</th>
+            <th>LAC</th>
+            <th>Latitude, Longitude (4DMS)</th>
+            <th>Downlinks (MHz)</th>
+            <th>Uplinks (MHz)</th>
+            <th>Operator</th>
+            <th>Technology</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        {% for item in objects_list %}
+            <tr>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="about-us" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ item.call_sign }}
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="about-us">
+                            <li><span class="glyphicon glyphicon-pencil"></span><a href="{% url 'base_stations:update-basestation' pk=item.field_id %}">Edit</a></li>
+                            <li><a href="{% url 'base_stations:bts-search' %}?terms={{ item.call_sign }}&show_map=0">The BTS</a></li>
+                            <li><a href="{% url 'base_stations:bts-search' %}?terms={{ item.call_sign }}&show_map=1">The BTS on the map</a></li>
+                        </ul>
+                    </div>
+{#                    <a href="{% url 'base_stations:bts-search' %}?terms={{ item.call_sign }}&show_map=0" >{{ item.call_sign }}</a>#}
+                </td>
+                <td>
+                    {{ item.address }}
+                </td>
+                <td>
+                    {{ item.netid }}
+                </td>
+                <td>
+                    {{ item.taclac }}
+                </td>
+                <td>
+                    {{ item.coord_y }},{{ item.coord_x }}
+                </td>
+                <td>
+                    {{ item.downlinks }}
+                </td>
+                <td>
+                    {{ item.uplinks }}
+                </td>
+                <td>
+                    {{ item.operator }}
+                </td>
+                <td>
+                    {{ item.technology }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+    
+

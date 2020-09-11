@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h2>Licensees</h2>
+    <table id="myTable" class="display table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>License</th>
+            <th>Valid to</th>
+            <th>Address</th>
+            <th>City</th>
+            <th>Contact</th>
+            <th>Technician</th>
+            <th>Stream</th>
+            <th>WEB</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        {% for item in object_list %}
+            <tr>
+                <td>
+                    {{ item.organization.name }}
+                </td>
+                <td>
+                    {{ item.licence_type }}
+                </td>
+                <td>
+                    {{ item.licence_valid_to }}
+                </td>
+                <td>
+                    {{ item.address }}
+                </td>
+                <td>
+                    {{ item.city }}
+                </td>
+                <td>
+                    {{ item.contact }}
+                </td>
+                <td>
+                    {{ item.technician.name }} {{ item.technician.phone }}
+                </td>
+                <td>
+                    {{ item.stream|urlizetrunc:20 }}
+                </td>
+                <td>
+                    {{ item.web_site|urlizetrunc:20 }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+
+
+
+

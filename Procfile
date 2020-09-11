@@ -1,0 +1,1 @@
+web: gunicorn RFmonitor.wsgi:application --log-file -

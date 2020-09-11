@@ -1,0 +1,129 @@
+{% extends "layout.html" %}
+{% load rfmonitor_extras %}
+
+{% block content %}
+    <h3><span class="glyphicon glyphicon-book"></span> Measurements' Journal</h3>
+    <h4><a href="{% url 'fieldmeasurement_new' %}"><span class="glyphicon glyphicon-plus"></span> New Measurement</a></h4>
+    <table id="myTable" class="display table table-responsive">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th></th>
+            <th>Equipment</th>
+            <th>Description</th>
+            <th>Operator</th>
+            <th>Report</th>
+            <th>Status</th>
+            <th>Author</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        {% for item in object_list %}
+            {% if item.scope == "PUBLIC" %}
+                <tr>
+                    <td>
+                        <a href="{% url 'fieldmeasurement_detail' pk=item.pk %}">{{ item.id }}</a>
+                    </td>
+                    <td>
+                        {{ item.title }}
+                    </td>
+                    <td>
+                        {{ item.date }}: {{ item.location }}
+                    </td>
+                    <td>
+                        {{ item.equipment }} & {{ item.antenna }}
+                    </td>
+                    <td>
+                            {{ item.description|truncatechars_html:9|safe }}
+                    </td>
+                    <td>
+                        {{ item.operator }}
+                    </td>
+                    <td>
+                        {% if item.report != None %}
+                            {{ item.report|urlizetrunc:20 }}
+                        {% else %}
+                            <p></p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ item.status }}
+                    </td>
+                    <td>
+                        {{ item.author }}
+                    </td>
+                </tr>
+            {% elif item.scope == "PRIVATE" and request.user == item.author %}
+                <tr>
+                    <td>
+                        <a href="{% url 'fieldmeasurement_detail' pk=item.pk %}">{{ item.id }}</a>
+                    </td>
+                    <td>
+                        {{ item.title }}
+                    </td>
+                    <td>
+                        {{ item.location }}: {{ item.date }}
+                    </td>
+                    <td>
+                        {{ item.equipment }} & {{ item.antenna }}
+                    </td>
+                    <td>
+                            {{ item.description|safe }}
+                    </td>
+                    <td>
+                        {{ item.operator }}
+                    </td>
+                    <td>
+                        {% if item.report != None %}
+                            {{ item.report|urlizetrunc:20 }}
+                        {% else %}
+                            <p></p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ item.status }}
+                    </td>
+                    <td>
+                        {{ item.author }}
+                    </td>
+                </tr>
+            {% elif item.scope == "STAFF" and request.user.is_staff %}
+                <tr>
+                    <td>
+                        <a href="{% url 'fieldmeasurement_detail' pk=item.pk %}">{{ item.id }}</a>
+                    </td>
+                    <td>
+                        {{ item.title }}
+                    </td>
+                    <td>
+                        {{ item.location }}: {{ item.date }}
+                    </td>
+                    <td>
+                        {{ item.equipment }} & {{ item.antenna }}
+                    </td>
+                    <td>
+                            {{ item.description|safe }}
+                    </td>
+                    <td>
+                        {{ item.operator }}
+                    </td>
+                    <td>
+                        {% if item.report != None %}
+                            {{ item.report|urlizetrunc:20 }}
+                        {% else %}
+                            <p></p>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {{ item.status }}
+                    </td>
+                    <td>
+                        {{ item.author }}
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

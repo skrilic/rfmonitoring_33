@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    <form method="post" class="form-horizontal">
+      {% csrf_token %}
+
+        <h3>Base station/Sector</h3>
+                <hr />
+        <div>{{ form.as_p }}</div>
+        <input type="hidden" name="terms" value="{{ form.call_sign.value }}">
+{#        <input type="hidden" name="coords" value="{{ form.coord_y.value }} {{ form.coord_x.value }}">#}
+{#        <input type="hidden" name="show_map" value="0">#}
+      <button type="submit" value=Update">Update</button>
+    </form>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+    <ol class="breadcrumb">
+        <li><span class="glyphicon glyphicon-book"></span><a href="{% url 'inventories:rfmonsitelog_list' %}">Monitoring Stations Journal</a></li>
+    </ol>
+        <h4>New Journal log</h4>
+        <form  class="post-form" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Save</button>
+        </form>
+{% endblock %}

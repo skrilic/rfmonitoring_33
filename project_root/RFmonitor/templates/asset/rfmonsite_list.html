@@ -1,0 +1,29 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <h2>Monitoring Sites</h2>
+    <table id="myTable" class="display table table-hover">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Type</th>
+        </tr>
+        </thead>
+        <tbody id="tableBody">
+        {% for item in object_list %}
+            <tr>
+                <td>
+                    {{ item.office.name }}
+                </td>
+                <td>
+                    {{ item.description|urlize }}
+                </td>
+                <td>
+                    {{ item.type }}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

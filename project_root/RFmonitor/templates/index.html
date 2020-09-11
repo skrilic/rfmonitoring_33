@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% load rfmonitor_extras %}
+{% block content %}
+
+    <h1>RF Regulatory Management Portal</h1>
+    <a class="btn btn-default" href="/show_txmap/"><span class="glyphicon glyphicon-map-marker"></span> Licensed Transmitters &raquo;</a>
+        <div id="map" style="width: 100%; height: 640px"></div>
+    <p class="map-description">Monitoring Stations</p>
+        <script>
+            var mapDef = {{ mapDefinition|safe }}[0]['fields'];
+            var map = L.map('map').setView([mapDef.map_lat, mapDef.map_lon], mapDef.map_zoom);
+
+            mapLink =
+                '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+            var baseMap = L.tileLayer(
+                'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; ' + mapLink,
+                maxZoom: 15,
+                }).addTo(map);
+
+            var monStations = {{monitoringStations|safe}};
+
+            monStations.forEach( function (station) {
+                L.marker([station.fields.latitude, station.fields.longitude], {title: station.fields.naziv}).bindPopup(station.fields.naziv).addTo(map);
+            });
+
+        </script>
+{% endblock %}

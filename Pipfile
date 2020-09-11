@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+Django = "==3.1"
+Markdown = "*"
+Pillow = "*"
+djangorestframework = "*"
+django-filter = "*"
+psycopg2 = "*"
+gunicorn = "*"
+waitress = "*"
+pylint-django = "*"
+
+[dev-packages]
+pylint = "*"
+
+[requires]
+python_version = "3.8.5"

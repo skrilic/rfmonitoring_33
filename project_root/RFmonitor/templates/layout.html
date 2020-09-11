@@ -1,0 +1,338 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load i18n %}
+    <title>{{ title }} RF-Monitoring</title>
+    {% load static %}
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}" />
+    <script src="https://cdn.jsdelivr.net/npm/medium-editor@latest/dist/js/medium-editor.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/medium-editor@latest/dist/css/medium-editor.min.css"
+      type="text/css"
+      media="screen"
+      charset="utf-8"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/lvoogdt/Leaflet.awesome-markers@2.0.2/dist/leaflet.awesome-markers.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/lvoogdt/Leaflet.awesome-markers@2.0.2/dist/leaflet.awesome-markers.css"
+    />
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"
+      integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+
+    <!-- Bootstrap 3.3.7 -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+      integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+      integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'rfdjango/css/site.css' %}"
+    />
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"
+      integrity="sha256-0rguYS0qgS6L4qVzANq4kjxPLtvnp5nn2nB5G1lWRv4="
+      crossorigin="anonymous"
+    ></script>
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css"
+    />
+
+    <script
+      type="text/javascript"
+      charset="utf8"
+      src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"
+    ></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/datatables-tabletools/2.1.5/js/TableTools.min.js"
+      integrity="sha256-PJx/6uF4YmZBaNKdSErhskmLcPGx6l8eNaMnxR29b6I="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js"
+      integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'rfdjango/css/rfmonitor.css' %}" />
+    <script src="{% static 'rfdjango/js/rfmonitor.js' %}"></script>
+
+    <!-- GOOGLE ANALYTICS -->
+    <script>
+      (function (i, s, o, g, r, a, m) {
+        i["GoogleAnalyticsObject"] = r;
+        (i[r] =
+          i[r] ||
+          function () {
+            (i[r].q = i[r].q || []).push(arguments);
+          }),
+          (i[r].l = 1 * new Date());
+        (a = s.createElement(o)), (m = s.getElementsByTagName(o)[0]);
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m);
+      })(
+        window,
+        document,
+        "script",
+        "//www.google-analytics.com/analytics.js",
+        "ga"
+      );
+      ga("create", "UA-9702641-8", "auto");
+      ga("send", "pageview");
+    </script>
+    <!-- END GOOGLE ANALYTICS -->
+  </head>
+
+  <body>
+    <div class="navbar navbar-fixed-top">
+      <nav class="navbar navbar-default">
+        <div class="container">
+          <div class="navbar-header">
+            <button
+              type="button"
+              class="navbar-toggle collapsed"
+              data-toggle="collapse"
+              data-target="#navbar1"
+              aria-expanded="false"
+            >
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">RFdjango</a>
+          </div>
+          <div id="navbar1" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              {% if user.is_superuser %}
+              <li><a href="/admin/">Admin</a></li>
+              {% endif %} {% if user.is_staff %}
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                  >View<b class="caret"></b
+                ></a>
+
+                <ul class="dropdown-menu">
+                  <li class="dropdown-header">Transmitters</li>
+                  <li><a href="/show_txmap/">Show Map</a></li>
+                  <li><a href="/licensees/">Licensees</a></li>
+                  <li class="dropdown dropdown-submenu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                      >Services</a
+                    >
+
+                    <ul class="dropdown-menu">
+                      <li><a href="/transmitters/BC/">FM Radio</a></li>
+                      <li><a href="/transmitters/BT/">Analog TV</a></li>
+                      <li><a href="/transmitters/AT/">Radio amateurs</a></li>
+                    </ul>
+                  </li>
+                  <li role="separator" class="divider"></li>
+
+                  <li class="dropdown-header">Measurements</li>
+
+                  <!-- <li class="dropdown dropdown-submenu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                      >FM Radio (auto)</a
+                    <ul class="dropdown-menu">
+                      <li><a href="/transmitters/fm/">Parameters</a></li>
+                      <li><a href="/transmitters/rds/">RDS</a></li>
+                    </ul> 
+                  </li> -->
+
+                  <li class="dropdown dropdown-submenu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                      >Reports</a
+                    >
+                    <ul class="dropdown-menu">
+                      <li><a href="/rfdjango/fieldmeas/">Journal</a></li>
+                    </ul>
+                  </li>
+
+                  <li role="separator" class="divider"></li>
+
+                  <li class="dropdown-header">Inventory</li>
+
+                  <li class="dropdown dropdown-submenu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                      >Equipment</a
+                    >
+                    <ul class="dropdown-menu">
+                      <li><a href="/inventory/">Inventory</a></li>
+                      <li><a href="/inventory/assetslog/">Journal</a></li>
+                    </ul>
+                  </li>
+
+                  <li class="dropdown dropdown-submenu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                      >Monitoring stations</a
+                    >
+                    <ul class="dropdown-menu">
+                      <li><a href="/inventory/rfmonsite/">List</a></li>
+                      <li><a href="/inventory/rfmslog/">Journal</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                  >Mobile operators<b class="caret"></b
+                ></a>
+                <ul class="dropdown-menu">
+                  <li class="dropdown dropdown-submenu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"
+                      >BTS/Sector</a
+                    >
+
+                    <ul class="dropdown-menu">
+                      <li>
+                        <a href="{% url 'base_stations:redirect-search' %}"
+                          >All Sites</a
+                        >
+                      </li>
+                      <li>
+                        <a href="{% url 'base_stations:create-basestation' %}"
+                          >Add</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              {% endif %}
+            </ul>
+            {% include 'rfdjango/loginpartial.html' %}
+          </div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="container body-content">
+      {% block content %}{% endblock %} {% block scripts %}{% endblock %}
+
+      <hr />
+      <footer>
+        <p>&copy; 2009 - {{ year }} RF-Django</p>
+      </footer>
+    </div>
+
+    <script>
+      var editor = new MediumEditor(".editable", {
+        toolbar: {
+          buttons: [
+            "bold",
+            "italic",
+            "underline",
+            "justifyLeft",
+            "justifyCenter",
+            "justifyRight",
+            "justifyFull",
+            "orderedlist",
+            "unorderedlist",
+            "anchor",
+            "h2",
+            "h3",
+            "quote",
+          ],
+          diffLeft: 25,
+          diffTop: 10,
+        },
+        placeholder: {
+          /* This example includes the default options for placeholder,
+               if nothing is passed this is what it used */
+          text: "Just facts, findings, remarks and notes ...",
+          hideOnClick: true,
+        },
+        // active class
+        activeButtonClass: "medium-editor-button-active",
+
+        // shows fontawesome icons
+        buttonLabels: true,
+
+        // time to wait before showing the editor
+        delay: 0,
+
+        // disables return key
+        disableReturn: false,
+        disableDoubleReturn: false,
+
+        // disables two (or more) empty new lines
+        disableExtraSpaces: false,
+
+        // disables adding the contenteditable behavior
+        disableEditing: false,
+
+        // auto linkify links
+        autoLink: true,
+
+        // container element
+        elementsContainer: false,
+
+        // content window
+        contentWindow: window,
+
+        // root element
+        ownerDocument: document,
+
+        // uses target=_blank attribute
+        targetBlank: false,
+
+        // enables extensions
+        // https://github.com/yabwe/medium-editor/tree/master/src/js/extensions
+        extensions: {},
+
+        // enables spell check
+        spellcheck: true,
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+
+    <h3><span class="glyphicon glyphicon-map-marker"></span>Mobile networks base stations &raquo;</h3>
+        <div id="map" style="width: 100%; height: 640px"></div>
+
+        <script>
+            var mapDef = {{ mapDefinition|safe }}[0]['fields'];
+            var map = L.map('map').setView([mapDef.map_lat, mapDef.map_lon], mapDef.map_zoom);
+
+            mapLink =
+                '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+            var baseMap = L.tileLayer(
+                'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: 'Map data &copy; ' + mapLink,
+                maxZoom: 18,
+                }).addTo(map);
+
+            var baseStations = {{baseStations|safe}};
+
+            var markers = L.markerClusterGroup({ chunkedLoading: true });
+
+            baseStations.forEach( function (station) {
+                {#L.marker([station.fields.latitude, station.fields.longitude], {title: station.fields.call_sign}).bindPopup(station.fields.popup).addTo(map);#}
+                var marker = L.marker([station.fields.latitude, station.fields.longitude], {title: station.fields.call_sign}).bindPopup(station.fields.popup);
+                markers.addLayer(marker);
+            });
+            map.addLayer(markers);
+
+        </script>
+{% endblock %}

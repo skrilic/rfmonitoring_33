@@ -1,0 +1,100 @@
+﻿{% extends "layout.html" %}
+
+{% block content %}
+    <h3>{{ title }}</h3>
+
+    <form action="{% url 'base_stations:redirect-search' %}">
+        <div class="row">
+          <div class="col-lg-6">
+            <div class="input-group">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit" >Go!</button>
+              </span>
+              <input type="text" class="form-control" name="terms" placeholder="Search for (3 chars min.) ...">
+                <input type="hidden" class="form-control" name="show_map" value="0">
+            </div><!-- /input-group -->
+          </div><!-- /.col-lg-6 -->
+        </div><!-- /.row -->
+    </form>
+
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Address</th>
+                <th scope="col">Operator</th>
+                <th scope="col">Latitude (4DMS)</th>
+                <th scope="col">Longitude (4DMS)</th>
+                <!-- <th>Latitude, Longitude</th> -->
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in objects_list %}
+            <tr>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-primary dropdown-toggle" type="button" id="about-us" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ item.address }}
+                        <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="about-us">
+                            <li><a href="{% url 'base_stations:bts-search' %}?coords={{ item.coord_y }} {{ item.coord_x }}&show_map=0">List</a></li>
+                            <li><a href="{% url 'base_stations:bts-search' %}?coords={{ item.coord_y }} {{ item.coord_x }}&show_map=1">Map</a></li>
+                        </ul>
+                    </div>
+                </td>
+                <td>
+                    {{ item.operator }}
+                </td>
+                <td>
+                    {{ item.coord_y }}
+                </td>
+                <td>
+                    {{ item.coord_x }}
+                </td>
+                <!-- <td>
+                    {{ item.latlon_decimal }}
+                </td> -->
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {% if objects_list.has_other_pages %}
+      <ul class="pagination">
+        {% if objects_list.has_previous %}
+          <li><a href="?page={{ objects_list.previous_page_number }}">&laquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in objects_list.paginator.page_range %}
+          {% if objects_list.number == i %}
+            <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+          {% else %}
+              {% if  i <= 5 %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+              {% if  i == objects_list.previous_page_number and i > 5 %}
+                <li><span>...</span></li>
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+              {% endif %}
+              {% if  i == objects_list.next_page_number and i > 5 and i != last_page %}
+                <li><a href="?page={{ i }}">{{ i }}</a></li>
+                <li><span>...</span></li>
+                <li><a href="?page={{ last_page }}">{{ last_page }}</a></li>
+              {% endif %}
+          {% endif %}
+        {% endfor %}
+
+        {% if objects_list.has_next %}
+          <li><a href="?page={{ objects_list.next_page_number }}">&raquo;</a></li>
+        {% else %}
+          <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+      </ul>
+    {% endif %}
+
+{% endblock %}
+
+
+    
+

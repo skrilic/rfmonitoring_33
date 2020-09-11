@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% load rfmonitor_extras %}
+
+{% block content %}
+    {% if user|has_group:"assets_admin" %}
+        <h4>Edit Journal log</h4>
+        <form  class="post-form" enctype="multipart/form-data" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-default">Save</button>
+        </form>
+    {% else %}
+        <h4>Sorry, You are not Assets Admin!</h4>
+    {% endif %}
+{% endblock %}
