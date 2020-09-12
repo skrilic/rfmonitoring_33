@@ -1,1 +1,1 @@
-web: gunicorn RFmonitor.wsgi:application --log-file -
+web: gunicorn project_root.RFmonitor.wsgi --log-file -

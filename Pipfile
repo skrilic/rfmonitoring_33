@@ -13,6 +13,7 @@ psycopg2 = "*"
 gunicorn = "*"
 waitress = "*"
 pylint-django = "*"
+django-heroku = "*"
 
 [dev-packages]
 pylint = "*"
