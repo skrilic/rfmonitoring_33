@@ -4,8 +4,8 @@ Description="rfmonitoring_33 - WEB app for RF-DB management"
 [Service]
 User=django
 Group=django
-Environment="PYTHONPATH=/etc/opt/rfmonitoring:/opt/rfmonitoring"
-Environment="DJANGO_SETTINGS_MODULE=settings"
+Environment="PYTHONPATH=/home/slaven/projects/rfmonitoring_33/settings"
+Environment="DJANGO_SETTINGS_MODULE=linode"
 ExecStart=/home/slaven/.local/share/virtualenvs/rfmonitoring_33-Muw8tf8Q/bin/gunicorn \
     --workers=2 \
     --log-file=/var/log/rfmonitoring_33/gunicorn.log \
