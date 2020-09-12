@@ -64,10 +64,11 @@ TEMPLATES = [
 ]
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(LOCAL_STATIC_CDN_PATH, 'static')
 
 # Additional locations of static files
 STATICFILES_DIRS = [
-    os.path.join(LOCAL_STATIC_CDN_PATH, "static"),
+    os.path.join(BASE_DIR, "static"),
 ]
 
 STATICFILES_FINDERS = (

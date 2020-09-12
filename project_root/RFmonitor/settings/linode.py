@@ -1,21 +1,19 @@
-# MASTER BRANCH settings.py
-from .installed_apps import *
-from .common import *
-import django_heroku
-
-# print("Using Production Site")
+from installed_apps import *
+from common import *
 
 import os
 
 SITE_ROOT = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = '/home/slaven/projects/rfmonitoring_33/project_root'
 LOCAL_STATIC_CDN_PATH = os.path.join(
     os.path.dirname(os.path.dirname(BASE_DIR)), 'static_cdn')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '$SERVER_IPv4_ADDRESS']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost',
+                 'rfdjango.planone.site', '$SERVER_IPv4_ADDRESS']
 
 ADMINS = (
     # ('Slaven Krilic', 'skrilic@gmail.com'),
@@ -31,7 +29,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         # Or path to database file if using sqlite3.
-        'NAME': os.path.join(LOCAL_STATIC_CDN_PATH, 'monitoring.sqlite'),
+        # 'NAME': os.path.join(LOCAL_STATIC_CDN_PATH, 'monitoring.sqlite'),
+        'NAME': '/var/opt/rfmonitoring/static_cdn/monitoring.sqlite',
     }
 }
 
