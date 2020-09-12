@@ -19,3 +19,4 @@ db.sqlite3
 /project_root/RFmonitor/settings/dev_settings.py
 /rfmonitoring_33.zip
 /monitoring.sqbpro
+/Pipfile.lock
