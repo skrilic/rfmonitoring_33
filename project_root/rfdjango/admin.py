@@ -1,24 +1,23 @@
 # -*- coding: utf-8 -*-
+from .models import Area
+from .models import monitorstanice
+from .models import kote
+from .models import Towers
+from .models import MapDefinition
+from .models import Transmitter
+from .models import FieldMeasurement
+from .models import Antenna
+from .models import portalUser
+from .models import Licensee
+from .models import LicenceType
+from .models import TechnicalContact
+from .models import Organization
 __author__ = "skrilic"
 __date__ = "$28.07.2011. 14:00:00$"
 
 from django.contrib import admin
 
 admin.site.disable_action('delete_selected')
-
-from .models import Organization
-from .models import TechnicalContact
-from .models import LicenceType
-from .models import Licensee
-from .models import portalUser
-from .models import Antenna
-from .models import FieldMeasurement
-from .models import Transmitter
-from .models import MapDefinition
-from .models import Towers
-from .models import kote
-from .models import monitorstanice
-from .models import Area
 
 
 class OrganizationAdmin(admin.ModelAdmin):
@@ -105,7 +104,8 @@ class LicenseeAdmin(admin.ModelAdmin):
     class Media:
         js = ('admin/js/collapse.js',)
 
-    ordering = ['organization__name', 'organization__countryCode', 'organization__area__name']
+    ordering = ['organization__name',
+                'organization__countryCode', 'organization__area__name']
     unique_together = ['organization__name', 'licence_type']
 
 
@@ -113,7 +113,8 @@ admin.site.register(Licensee, LicenseeAdmin)
 
 
 class portalUserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'e_mail', 'phone_number', 'organization', 'description')
+    list_display = ('username', 'e_mail', 'phone_number',
+                    'organization', 'description')
     list_filter = ('organization',)
     ordering = ['username', ]
     search_fields = ['username__username', 'organization__naziv', ]
@@ -153,7 +154,8 @@ admin.site.register(Antenna, AntennaAdmin)
 
 class FieldMeasurementAdmin(admin.ModelAdmin):
     exclude = ('author',)
-    list_display = ('title', 'date', 'operator', 'type', 'location', 'description', 'status', 'report')
+    list_display = ('title', 'date', 'operator', 'type',
+                    'location', 'description', 'status', 'report')
     list_filter = [
         'type',
         'status'
@@ -173,7 +175,8 @@ class FieldMeasurementAdmin(admin.ModelAdmin):
         obj.save()
 
     def has_change_permission(self, request, obj=None):
-        has_class_permission = super(FieldMeasurementAdmin, self).has_change_permission(request, obj)
+        has_class_permission = super(
+            FieldMeasurementAdmin, self).has_change_permission(request, obj)
         if not has_class_permission:
             return False
         if obj is not None and not request.user.is_superuser and request.user.id != obj.author.id:
@@ -181,7 +184,8 @@ class FieldMeasurementAdmin(admin.ModelAdmin):
         return True
 
     def has_delete_permission(self, request, obj=None):
-        has_class_permission = super(FieldMeasurementAdmin, self).has_delete_permission(request, obj)
+        has_class_permission = super(
+            FieldMeasurementAdmin, self).has_delete_permission(request, obj)
         if not has_class_permission:
             return False
         if obj is not None and not request.user.is_superuser and request.user.id != obj.author.id:
@@ -199,6 +203,7 @@ class TransmitterAdmin(admin.ModelAdmin):
         'licence_type',
         'callsign',
         'frequency',
+        'frequency_rx',
         'organization',
         'antenna_height',
         'antenna',
@@ -234,6 +239,7 @@ class TransmitterAdmin(admin.ModelAdmin):
                      'licence_state',
                      'enabled',
                      'frequency',
+                     'frequency_rx',
                      # 'erp',
                      'transmitter_power',
                      'antenna_height',
@@ -299,4 +305,3 @@ class AreaAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Area, AreaAdmin)
-

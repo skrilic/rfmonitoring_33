@@ -65,10 +65,10 @@ POL = (
 
 
 EMISSIONS = (
-        ('BC', 'Broadcast FM radio'),
-        ('BT', 'Broadcast analog TV'),
-        ('AT', 'Amateur radio')
-    )
+    ('BC', 'Broadcast FM radio'),
+    ('BT', 'Broadcast analog TV'),
+    ('AT', 'Amateur radio')
+)
 
 
 # Monitoring stations
@@ -76,13 +76,15 @@ class monitorstanice(models.Model):
     naziv = models.CharField(max_length=64, unique=True)
     aktivna = models.BooleanField(choices=YES_NO, default=1,
                                   verbose_name="Operational state", help_text="Monitoring station is operational?")
-    area = models.CharField(choices=AREAS, max_length=32, default='Rural', help_text="ITU-R BS.412-... clasification")
+    area = models.CharField(choices=AREAS, max_length=32,
+                            default='Rural', help_text="ITU-R BS.412-... clasification")
     portalvisibility = models.BooleanField(choices=YES_NO, default=0,
                                            verbose_name="Portal visibility",
                                            help_text="Measurement results from this st. will be visibile on the portal?")
     longitude = models.DecimalField(max_digits=10, decimal_places=6)
     latitude = models.DecimalField(max_digits=10, decimal_places=6)
-    ip_address = models.GenericIPAddressField(null=True, blank=True, verbose_name="IP address")
+    ip_address = models.GenericIPAddressField(
+        null=True, blank=True, verbose_name="IP address")
     additional_info = models.TextField(null=True, blank=True)
 
     class Meta:
@@ -100,7 +102,8 @@ class monitorstanice(models.Model):
 
 class Area(models.Model):
     name = models.CharField(max_length=64, verbose_name="Area name")
-    zipcode = models.IntegerField(unique=True, verbose_name="Zipcode for the area")
+    zipcode = models.IntegerField(
+        unique=True, verbose_name="Zipcode for the area")
 
     class Meta:
         ordering = ('name',)
@@ -112,7 +115,8 @@ class Area(models.Model):
 # Sites
 class kote(models.Model):
     naziv = models.CharField(max_length=64, verbose_name="Name")
-    area = models.ForeignKey(Area, verbose_name="Area name", on_delete=models.PROTECT)
+    area = models.ForeignKey(
+        Area, verbose_name="Area name", on_delete=models.PROTECT)
     extrainfo = models.TextField(blank=True)
 
     class Meta:
@@ -133,8 +137,10 @@ class Towers(models.Model):
     # position = GeopositionField(help_text="Helper for visualization and correction")
     latitude = models.DecimalField(max_digits=10, decimal_places=6)
     longitude = models.DecimalField(max_digits=10, decimal_places=6)
-    kota = models.ForeignKey(kote, verbose_name="Site", on_delete=models.PROTECT)
-    extrainfo = models.TextField(default='Comment...', blank=True, verbose_name='Description')
+    kota = models.ForeignKey(kote, verbose_name="Site",
+                             on_delete=models.PROTECT)
+    extrainfo = models.TextField(
+        default='Comment...', blank=True, verbose_name='Description')
 
     class Meta:
         verbose_name = 'Tower'
@@ -193,8 +199,10 @@ class Organization(models.Model):
     # city = models.CharField(max_length=128)
     area = models.ForeignKey(Area, on_delete=models.PROTECT)
     countryCode = models.ForeignKey(CountryCode, on_delete=models.PROTECT)
-    rds_pi = models.IntegerField(blank=True, null=True, help_text="For FM Radio only")
-    rds_pihex = models.CharField(max_length=4, blank=True, null=True, help_text="For FM Radio only")
+    rds_pi = models.IntegerField(
+        blank=True, null=True, help_text="For FM Radio only")
+    rds_pihex = models.CharField(
+        max_length=4, blank=True, null=True, help_text="For FM Radio only")
 
     def zipcode(self):
         return "%s" % self.area.zipcode
@@ -212,7 +220,8 @@ class Organization(models.Model):
 
 
 class TechnicalContact(models.Model):
-    name = models.CharField(max_length=200, help_text='Company or person(s) to contact')
+    name = models.CharField(
+        max_length=200, help_text='Company or person(s) to contact')
     phone = models.CharField(default='111-222', max_length=16)
     fax = models.CharField(default='111-222', max_length=16)
     email = models.EmailField(default='unknown@email.com')
@@ -234,12 +243,15 @@ class LicenceType(models.Model):
 
 class Licensee(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
-    licence_type = models.ForeignKey(LicenceType, default=0, on_delete=models.PROTECT)
+    licence_type = models.ForeignKey(
+        LicenceType, default=0, on_delete=models.PROTECT)
     licence_issued = models.DateField(blank=True, null=True)
     licence_valid_to = models.DateField(blank=True, null=True)
     technician = models.ForeignKey(TechnicalContact, on_delete=models.PROTECT)
-    stream = models.URLField(blank=True, null=True, max_length=200, help_text="Live stream URL")
-    web_site = models.URLField(blank=True, null=True, max_length=200, help_text="Web page URL")
+    stream = models.URLField(blank=True, null=True,
+                             max_length=200, help_text="Live stream URL")
+    web_site = models.URLField(
+        blank=True, null=True, max_length=200, help_text="Web page URL")
     additional_info = models.TextField(blank=True, null=True,
                                        help_text="Additional data i.e. contacts, phones, persons, notes and remarks "
                                                  "etc.")
@@ -295,7 +307,8 @@ class portalUser(models.Model):
     organization = models.ForeignKey(Organization, on_delete=models.PROTECT)
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
                                  message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
-    phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)  # validators should be a list
+    phone_number = models.CharField(
+        validators=[phone_regex], max_length=17, blank=True)  # validators should be a list
     description = models.TextField(verbose_name="Description", help_text="Additional info about portla user, if any.",
                                    blank=True)
 
@@ -327,42 +340,78 @@ class Antenna(models.Model):
     name = models.CharField(max_length=128,
                             help_text="Antenna model, type ...",
                             unique=False)
-    ERP_00 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='0°')
-    ERP_10 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='10°')
-    ERP_20 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='20°')
-    ERP_30 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='30°')
-    ERP_40 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='40°')
-    ERP_50 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='50°')
-    ERP_60 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='60°')
-    ERP_70 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='70°')
-    ERP_80 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='80°')
-    ERP_90 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='90°')
-    ERP_100 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='100°')
-    ERP_110 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='110°')
-    ERP_120 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='120°')
-    ERP_130 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='130°')
-    ERP_140 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='140°')
-    ERP_150 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='150°')
-    ERP_160 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='160°')
-    ERP_170 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='170°')
-    ERP_180 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='180°')
-    ERP_190 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='190°')
-    ERP_200 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='200°')
-    ERP_210 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='210°')
-    ERP_220 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='220°')
-    ERP_230 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='230°')
-    ERP_240 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='240°')
-    ERP_250 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='250°')
-    ERP_260 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='260°')
-    ERP_270 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='270°')
-    ERP_280 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='280°')
-    ERP_290 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='290°')
-    ERP_300 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='300°')
-    ERP_310 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='310°')
-    ERP_320 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='320°')
-    ERP_330 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='330°')
-    ERP_340 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='340°')
-    ERP_350 = models.DecimalField(max_digits=3, decimal_places=1, verbose_name='350°')
+    ERP_00 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='0°')
+    ERP_10 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='10°')
+    ERP_20 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='20°')
+    ERP_30 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='30°')
+    ERP_40 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='40°')
+    ERP_50 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='50°')
+    ERP_60 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='60°')
+    ERP_70 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='70°')
+    ERP_80 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='80°')
+    ERP_90 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='90°')
+    ERP_100 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='100°')
+    ERP_110 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='110°')
+    ERP_120 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='120°')
+    ERP_130 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='130°')
+    ERP_140 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='140°')
+    ERP_150 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='150°')
+    ERP_160 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='160°')
+    ERP_170 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='170°')
+    ERP_180 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='180°')
+    ERP_190 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='190°')
+    ERP_200 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='200°')
+    ERP_210 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='210°')
+    ERP_220 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='220°')
+    ERP_230 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='230°')
+    ERP_240 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='240°')
+    ERP_250 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='250°')
+    ERP_260 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='260°')
+    ERP_270 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='270°')
+    ERP_280 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='280°')
+    ERP_290 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='290°')
+    ERP_300 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='300°')
+    ERP_310 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='310°')
+    ERP_320 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='320°')
+    ERP_330 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='330°')
+    ERP_340 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='340°')
+    ERP_350 = models.DecimalField(
+        max_digits=3, decimal_places=1, verbose_name='350°')
     vertical_pattern = models.TextField(help_text='Comma separated pair of values in form DEG:DB', blank=True,
                                         null=True)
 
@@ -423,13 +472,13 @@ class FieldMeasurement(models.Model):
         # ('APPROVED', 'Approved'),
         ('DONE', 'Done')
     ), default="ONHOLD"
-                              )
+    )
     scope = models.CharField(max_length=64, choices=(
         ('PRIVATE', 'Private'),
         ('PUBLIC', 'Public'),
         ('STAFF', 'Staff only')
     ), default="STAFF"
-                               )
+    )
     report = models.URLField(null=True, blank=True, max_length=200,
                              help_text='https://... (Link to the document on the cloud)')
 
@@ -480,7 +529,16 @@ class Transmitter(models.Model):
     frequency = models.DecimalField(
         max_digits=6,
         decimal_places=2,
-        verbose_name="Freq. MHz"
+        verbose_name="Tx Freq. MHz"
+    )
+    frequency_rx = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        default=0,
+        blank=True,
+        null=True,
+        help_text="Only relevant for services like PMR or Radio Ameteurs",
+        verbose_name="Rx Freq. MHz"
     )
     erp = models.DecimalField(
         max_digits=11,
@@ -531,14 +589,16 @@ class Transmitter(models.Model):
         default='30/60/90',
         help_text='Direction(s) in °'
     )
-    antenna_tilt = models.DecimalField(max_digits=5, decimal_places=2, help_text='Tilt in °')
+    antenna_tilt = models.DecimalField(
+        max_digits=5, decimal_places=2, help_text='Tilt in °')
 
     def __str__(self):
         # return '%s; %sMHz; %s' % (self.name, self.frequency, self.tower)
         return '%s' % self.name
 
     class Meta:
-        ordering = ['organization__name', 'tower__kota__naziv', 'name', 'frequency']
+        ordering = ['organization__name',
+                    'tower__kota__naziv', 'name', 'frequency']
 
 
 # # Measurement Results

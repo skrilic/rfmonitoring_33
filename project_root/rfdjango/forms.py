@@ -18,6 +18,7 @@ class TransmitterForm(ModelForm):
             'enabled',
             'licence_state',
             'frequency',
+            'frequency_rx',
             'erp',
             'transmitter_power',
             'antenna_height',

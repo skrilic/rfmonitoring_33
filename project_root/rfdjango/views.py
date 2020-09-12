@@ -189,6 +189,7 @@ class TransmitterList(LoginRequiredMixin, ListView):
     login_url = '/login/'
     template_name = 'rfdjango/transmitter_list.html'
     model = Transmitter
+    paginate_by = 500
 
     def get_queryset(self):
         try:
@@ -199,7 +200,7 @@ class TransmitterList(LoginRequiredMixin, ListView):
                 licence_state=True
             )
         except:
-            return Transmitter.objects.all().order_by('-name')[:500]
+            return Transmitter.objects.all().order_by('-name')
 
 
 class FieldMeasurementList(LoginRequiredMixin, ListView):

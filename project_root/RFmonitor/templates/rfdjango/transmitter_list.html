@@ -1,62 +1,51 @@
-﻿{% extends "layout.html" %}
+﻿{% extends "layout.html" %} {% block content %}
 
-{% block content %}
-
-    <h2>Transmitters</h2>
-    <table id="myTable" class="display table table-hover">
-        <thead>
-        <tr>
-            <th>Name</th>
-            <th>Organization</th>
-            <th>Service</th>
-            <th>MHz</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th>ERP</th>
-            <th>Tx Power</th>
-            <th>Ant. height</th>
-            <th>Ant. direction</th>
-        </tr>
-        </thead>
-        <tbody id="tableBody">
-        {% for item in transmitter_list %}
-            <tr>
-                <td>
-                    <a class="btn btn-info" role="button" href="/transmitters/{{ item.name|slugify }}/{{ item.tower.latitude }}/{{ item.tower.longitude }}/">{{ item.name }}</a>
-                </td>
-                <td>
-                    {{ item.organization }}
-                </td>
-                <td>
-                    {{ item.licence_type }}
-                </td>
-                <td>
-                    {{ item.frequency }}
-                </td>
-                <td>
-                    {{ item.tower.latitude }}
-                </td>
-                <td>
-                    {{ item.tower.longitude }}
-                </td>
-                <td>
-                    {{ item.erp }}
-                </td>
-                <td>
-                    {{ item.transmitter_power }}
-                </td>
-                <td>
-                    {{ item.antenna_height }}
-                </td>
-                <td>
-                    {{ item.antenna_direction }}
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<h2>Transmitters</h2>
+<table id="myTable" class="display table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Organization</th>
+      <th>Call sign</th>
+      <th>Service</th>
+      <th>Tx MHz</th>
+      <th>Rx MHz</th>
+      <th>Latitude</th>
+      <th>Longitude</th>
+      <th>ERP</th>
+      <th>Tx Power</th>
+      <th>Ant. height</th>
+      <th>Ant. direction</th>
+    </tr>
+  </thead>
+  <tbody id="tableBody">
+    {% for item in transmitter_list %}
+    <tr>
+      <td>
+        <a
+          class="btn btn-info"
+          role="button"
+          href="/transmitters/{{ item.name|slugify }}/{{ item.tower.latitude }}/{{ item.tower.longitude }}/"
+          >{{ item.name }}</a
+        >
+      </td>
+      <td>{{ item.organization }}</td>
+      <td>{{ item.callsign }}</td>
+      <td>{{ item.licence_type }}</td>
+      <td>{{ item.frequency }}</td>
+      {% if item.licence_type == 'AT' %}
+      <td>{{ item.frequency_rx }}</td>
+      {% else %}
+      <td>---</td>
+      {% endif %}
+      <td>{{ item.tower.latitude }}</td>
+      <td>{{ item.tower.longitude }}</td>
+      <td>{{ item.erp }}</td>
+      <td>{{ item.transmitter_power }}</td>
+      <td>{{ item.antenna_height }}</td>
+      <td>{{ item.antenna_direction }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
 {% endblock %}
-
-
-    
-

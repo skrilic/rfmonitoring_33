@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+from django.urls import reverse
+from django.utils import timezone
 from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User
@@ -18,7 +20,8 @@ CURRENCY = (
 
 class Office(models.Model):
     name = models.CharField(max_length=128, unique=True)
-    address = models.CharField(max_length=128, default="NA", null=True, blank=True)
+    address = models.CharField(
+        max_length=128, default="NA", null=True, blank=True)
     postal = models.IntegerField(default=0, null=True, blank=True)
     city = models.CharField(max_length=24, default="NA", null=True, blank=True)
 
@@ -148,11 +151,15 @@ class RFmonSiteEvent(models.Model):
 
 
 class System(models.Model):
-    dongle = models.CharField(max_length=64, verbose_name='Name (Licence/dongle...)')
+    dongle = models.CharField(
+        max_length=64, verbose_name='Name (Licence/dongle...)')
     description = models.TextField(blank=True, null=True)
-    location = models.ForeignKey(Office, verbose_name='Location', null=True, blank=True, on_delete=models.CASCADE)
-    person = models.ForeignKey(UsedbyPerson, verbose_name='User', on_delete=models.CASCADE)
-    microloc = models.CharField(max_length=64, null=True, blank=True, verbose_name='Room/vehicle')
+    location = models.ForeignKey(
+        Office, verbose_name='Location', null=True, blank=True, on_delete=models.CASCADE)
+    person = models.ForeignKey(
+        UsedbyPerson, verbose_name='User', on_delete=models.CASCADE)
+    microloc = models.CharField(
+        max_length=64, null=True, blank=True, verbose_name='Room/vehicle')
     # location = models.ForeignKey(Office, verbose_name='Lokacija')
     inuse = models.BooleanField(verbose_name='In use', default=1)
     image = models.ImageField(upload_to='images',
@@ -179,9 +186,12 @@ class System(models.Model):
 
 
 class Contract(models.Model):
-    name = models.CharField(max_length=256, verbose_name='Contract name', unique=True)
-    contractor = models.ForeignKey(Procurer, verbose_name='Contractor', on_delete=models.CASCADE)
-    description = models.TextField(verbose_name='Description', blank=True, null=True)
+    name = models.CharField(
+        max_length=256, verbose_name='Contract name', unique=True)
+    contractor = models.ForeignKey(
+        Procurer, verbose_name='Contractor', on_delete=models.CASCADE)
+    description = models.TextField(
+        verbose_name='Description', blank=True, null=True)
     dateofcontract = models.DateField(verbose_name='Date')
     currency = models.CharField(max_length=12, choices=CURRENCY, default='BAM', null=True, blank=True,
                                 verbose_name='Currency')
@@ -200,19 +210,31 @@ class Contract(models.Model):
 
 
 class Asset(models.Model):
-    barcode = models.CharField(max_length=24, verbose_name='Bar code', unique=True)
-    prodcode = models.CharField(max_length=64, null=True, blank=True, verbose_name='Prod. code')
+    barcode = models.CharField(
+        max_length=24, verbose_name='Bar code', unique=True)
+    prodcode = models.CharField(
+        max_length=64, null=True, blank=True, verbose_name='Prod. code')
     description = models.CharField(max_length=128, verbose_name='Description')
-    manufacturer = models.ForeignKey(Manufacturer, verbose_name='Manufacturer', on_delete=models.CASCADE)
-    serialno = models.CharField(max_length=128, null=True, blank=True, verbose_name='Serial no.')
-    license = models.CharField(max_length=128, null=True, blank=True, verbose_name='Licence')
-    usedby = models.ForeignKey(UsedbyPerson, verbose_name='Assigned to', blank=True, null=True, on_delete=models.CASCADE)
-    contract = models.ForeignKey(Contract, verbose_name='Contract', blank=True, null=True, on_delete=models.CASCADE)
-    partof = models.ForeignKey(System, verbose_name='Part of', blank=True, null=True, on_delete=models.CASCADE)
-    location = models.ForeignKey(Office, null=True, blank=True, verbose_name='Location', on_delete=models.CASCADE)
-    annotation = models.CharField(max_length=128, null=True, blank=True, verbose_name='Note')
-    procurementdate = models.DateField(null=True, blank=True, verbose_name='Procurement date')
-    depreciationdate = models.DateField(null=True, blank=True, verbose_name='Depreciation date')
+    manufacturer = models.ForeignKey(
+        Manufacturer, verbose_name='Manufacturer', on_delete=models.CASCADE)
+    serialno = models.CharField(
+        max_length=128, null=True, blank=True, verbose_name='Serial no.')
+    license = models.CharField(
+        max_length=128, null=True, blank=True, verbose_name='Licence')
+    usedby = models.ForeignKey(UsedbyPerson, verbose_name='Assigned to',
+                               blank=True, null=True, on_delete=models.CASCADE)
+    contract = models.ForeignKey(
+        Contract, verbose_name='Contract', blank=True, null=True, on_delete=models.CASCADE)
+    partof = models.ForeignKey(
+        System, verbose_name='Part of', blank=True, null=True, on_delete=models.CASCADE)
+    location = models.ForeignKey(
+        Office, null=True, blank=True, verbose_name='Location', on_delete=models.CASCADE)
+    annotation = models.CharField(
+        max_length=128, null=True, blank=True, verbose_name='Note')
+    procurementdate = models.DateField(
+        null=True, blank=True, verbose_name='Procurement date')
+    depreciationdate = models.DateField(
+        null=True, blank=True, verbose_name='Depreciation date')
     currency = models.CharField(max_length=12, choices=CURRENCY, default='BAM', null=True, blank=True,
                                 verbose_name='Currency')
     purchaseprice = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, null=True, blank=True,
@@ -220,9 +242,12 @@ class Asset(models.Model):
     bookprice = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, null=True, blank=True,
                                     verbose_name='Book value BAM')
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    orderno = models.CharField(max_length=30, null=True, blank=True, verbose_name='Order no.')
-    procurer = models.ForeignKey(Procurer, verbose_name='Procurer', null=True, blank=True, on_delete=models.CASCADE)
-    microloc = models.CharField(max_length=64, null=True, blank=True, verbose_name='Room/vehicle/place')
+    orderno = models.CharField(
+        max_length=30, null=True, blank=True, verbose_name='Order no.')
+    procurer = models.ForeignKey(
+        Procurer, verbose_name='Procurer', null=True, blank=True, on_delete=models.CASCADE)
+    microloc = models.CharField(
+        max_length=64, null=True, blank=True, verbose_name='Room/vehicle/place')
     checked = models.BooleanField(default=False, verbose_name='Checked up')
     calibrated = models.BooleanField(default=True, verbose_name='Calibrated')
     proper = models.BooleanField(default=True, verbose_name='Operational')
@@ -238,12 +263,16 @@ class Asset(models.Model):
 
 class AssetLog(models.Model):
     asset = models.ForeignKey(Asset, on_delete=models.CASCADE)
-    logevent = models.ForeignKey(AssetEvent, verbose_name='Event', on_delete=models.CASCADE)
+    logevent = models.ForeignKey(
+        AssetEvent, verbose_name='Event', on_delete=models.CASCADE)
     details = models.TextField(null=True, blank=True)
     datetime = models.DateTimeField(verbose_name='Event start')
-    enddatetime = models.DateTimeField(null=True, blank=True, verbose_name='Event end')
-    expiration = models.DateField(null=True, blank=True, verbose_name='Expiration', help_text='Due date')
-    document = models.URLField(null=True, blank=True, max_length=200, help_text='https://... (Link on a document on the cloud)')
+    enddatetime = models.DateTimeField(
+        null=True, blank=True, verbose_name='Event end')
+    expiration = models.DateField(
+        null=True, blank=True, verbose_name='Expiration', help_text='Due date')
+    document = models.URLField(null=True, blank=True, max_length=200,
+                               help_text='https://... (Link on a document on the cloud)')
 
     class Meta:
         db_table = u'assetlog'
@@ -253,14 +282,18 @@ class AssetLog(models.Model):
 
 
 class Periodically(models.Model):
-    asset = models.ForeignKey(Asset, verbose_name='Equipment', on_delete=models.CASCADE)
+    asset = models.ForeignKey(
+        Asset, verbose_name='Equipment', on_delete=models.CASCADE)
     type = models.CharField(max_length=24, choices=CHECKTYPE, default='Calibration', null=True, blank=True,
                             verbose_name='Periodical checkup')
-    description = models.TextField(verbose_name='Checkup description', null=True, blank=True)
+    description = models.TextField(
+        verbose_name='Checkup description', null=True, blank=True)
     lastcheck = models.DateField(verbose_name='Last checkup')
     duedate = models.DateField(verbose_name='Next checkup')
 
-    alarm = models.IntegerField(verbose_name='Alarm', blank=True, null=True, help_text='How many days before expiration Warnings should be risen?')
+    alarm = models.IntegerField(verbose_name='Alarm', blank=True, null=True,
+                                help_text='How many days before expiration Warnings should be risen?')
+
     class Meta:
         db_table = u'periodically'
         verbose_name = 'Checkup'
@@ -277,8 +310,10 @@ class RFmonSite(models.Model):
         ('MMS', 'Mobile'),
         ('TMS', 'Transportable'),
     )
-    office = models.OneToOneField(Office, verbose_name="Office/Station", on_delete=models.CASCADE)
-    description = models.TextField(verbose_name="Additional Info/Description", default="No data...", null=True, blank=True)
+    office = models.OneToOneField(
+        Office, verbose_name="Office/Station", on_delete=models.CASCADE)
+    description = models.TextField(
+        verbose_name="Additional Info/Description", default="No data...", null=True, blank=True)
     type = models.CharField(
         max_length=24,
         choices=MONSITE_CHOICES,
@@ -286,7 +321,8 @@ class RFmonSite(models.Model):
         blank=True,
         verbose_name='Station type'
     )
-    document = models.URLField(null=True, blank=True, max_length=200, help_text='https://... (Link on a document on the cloud)')
+    document = models.URLField(null=True, blank=True, max_length=200,
+                               help_text='https://... (Link on a document on the cloud)')
 
     def __str__(self):
         return "%s" % self.office.name
@@ -303,19 +339,21 @@ class RFmonSite(models.Model):
     #     return (self.duedate - datetime.timdelta(days=self.alarm))
 
 
-from django.utils import timezone
-from django.urls import reverse
-
-
 class RFmonSiteLog(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    rfmonsite = models.ForeignKey(RFmonSite, verbose_name='RF monitoring site', on_delete=models.CASCADE)
-    logevent = models.ForeignKey(RFmonSiteEvent, verbose_name='Event', on_delete=models.CASCADE)
+    rfmonsite = models.ForeignKey(
+        RFmonSite, verbose_name='RF monitoring site', on_delete=models.CASCADE)
+    logevent = models.ForeignKey(
+        RFmonSiteEvent, verbose_name='Event', on_delete=models.CASCADE)
     details = models.TextField(max_length=65536)
-    datetime = models.DateTimeField(verbose_name='Event start', default=timezone.now)
-    enddatetime = models.DateTimeField(null=True, blank=True, verbose_name='Event end')
-    expiration = models.DateField(null=True, blank=True, verbose_name='Expiration', help_text='Due date for the next action.')
-    report = models.URLField(null=True, blank=True, max_length=200, help_text='https://... (Link on a document on the cloud)')
+    datetime = models.DateTimeField(
+        verbose_name='Event start', default=timezone.now)
+    enddatetime = models.DateTimeField(
+        null=True, blank=True, verbose_name='Event end')
+    expiration = models.DateField(
+        null=True, blank=True, verbose_name='Expiration', help_text='Due date for the next action.')
+    report = models.URLField(null=True, blank=True, max_length=200,
+                             help_text='https://... (Link on a document on the cloud)')
 
     def get_absolute_url(self):
         return reverse('inventories:rfmonsitelog_detail', kwargs={'pk': self.pk})
