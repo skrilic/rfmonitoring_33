@@ -10,7 +10,7 @@ ExecStart=/home/slaven/.local/share/virtualenvs/rfmonitoring_33-Muw8tf8Q/bin/gun
     --workers=2 \
     --log-file=/var/log/rfmonitoring_33/gunicorn.log \
     --bind=127.0.0.1:8002 --bind=[::1]:8002 \
-    RFmonitor.wsgi:application
+    RFmonitor.wsgi
 
 [Install]
 WantedBy=multi-user.target
