@@ -1,0 +1,16 @@
+[Unit]
+Description="rfmonitoring_33 - WEB app for RF-DB management"
+
+[Service]
+User=django
+Group=django
+Environment="PYTHONPATH=/etc/opt/rfmonitoring:/opt/rfmonitoring"
+Environment="DJANGO_SETTINGS_MODULE=settings"
+ExecStart=/home/slaven/.local/share/virtualenvs/rfmonitoring_33-Muw8tf8Q/bin/gunicorn \
+    --workers=2 \
+    --log-file=/var/log/rfmonitoring_33/gunicorn.log \
+    --bind=127.0.0.1:8002 --bind=[::1]:8002 \
+    RFmonitor.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
