@@ -537,7 +537,7 @@ class Transmitter(models.Model):
         default=0,
         blank=True,
         null=True,
-        help_text="Only relevant for services like PMR or Radio Ameteurs",
+        help_text="Only relevant for services like PMR or Radio Amateurs",
         verbose_name="Rx Freq. MHz"
     )
     erp = models.DecimalField(
