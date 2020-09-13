@@ -1,14 +1,13 @@
-{% extends "layout.html" %}
-{% load rfmonitor_extras %}
-
-{% block content %}
-    <ol class="breadcrumb">
-        <li><span class="glyphicon glyphicon-book"></span><a href="{% url 'transmitter_list' %}">Transmitters</a></li>
-    </ol>
-    <h4>New Transmitter</h4>
-    <form  class="post-form" enctype="multipart/form-data" method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+{% extends "layout.html" %} {% load rfmonitor_extras %} {% block content %}
+<!-- <ol class="breadcrumb">
+  <li>
+    <span class="glyphicon glyphicon-book"> </span
+    ><a href="{% url 'rfdjango:transmitter_list_all' %}">Transmitters</a>
+  </li>
+</ol> -->
+<h4>New Transmitter</h4>
+<form class="post-form" enctype="multipart/form-data" method="POST">
+  {% csrf_token %} {{ form.as_p }}
+  <button type="submit" class="save btn btn-default">Save</button>
+</form>
 {% endblock %}

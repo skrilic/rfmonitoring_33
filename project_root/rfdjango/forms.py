@@ -13,7 +13,7 @@ class TransmitterForm(ModelForm):
             'name',
             'licence_type',
             'callsign',
-            'signature',
+            # 'signature',
             'description',
             'enabled',
             'licence_state',
