@@ -5,7 +5,11 @@
     ><a href="{% url 'rfdjango:transmitter_list_all' %}">Transmitters</a>
   </li>
 </ol> -->
-<h4>New Transmitter</h4>
+{% if form.name.value %}
+  <h4>Edit Transmitter</h4>
+{% else %}
+  <h4>New Transmitter</h4>
+{% endif %}
 <form class="post-form" enctype="multipart/form-data" method="POST">
   {% csrf_token %} {{ form.as_p }}
   <button type="submit" class="save btn btn-default">Save</button>

@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^transmitters/$', TransmitterList.as_view(), name='transmitter_list_all'),
     path('transmitter/add/', TransmitterCreate.as_view(),
          name='create-transmitter'),
+    path('transmitter/edit/<int:pk>', TransmitterUpdate.as_view(),
+         name='update-transmitter'),
 
     # url(r'^transmitters/fm/$', MeasurementsList.as_view(), name='measurements_list'),
     # url(r'^transmitters/rds/$', RDSDecodedList.as_view(), name='rdsdecoded_list'),

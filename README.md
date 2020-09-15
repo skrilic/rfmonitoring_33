@@ -40,7 +40,7 @@ This method I've found at the https://simpleisbetterthancomplex.com/tutorial/201
 
 5.  Create initial migration `python manage.py makemigrations`
 
-6.  Since the database tables already exist We must apply fake initial migration `python manage.py migrate --fake-initial`. Issuing showmigrations is going to show what is the situation with migrations now.
+6.  Since the database tables already exist We must apply fake initial migration `python manage.py migrate --fake-initial` or `python manage.py migrate --fake`. Issuing showmigrations is going to show what is the situation with migrations now.
 
 - How to run tests
 - Deployment instructions
