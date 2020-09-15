@@ -1,10 +1,5 @@
 {% extends "layout.html" %} {% load rfmonitor_extras %} {% block content %}
-<!-- <ol class="breadcrumb">
-  <li>
-    <span class="glyphicon glyphicon-book"> </span
-    ><a href="{% url 'rfdjango:transmitter_list_all' %}">Transmitters</a>
-  </li>
-</ol> -->
+
 {% if form.name.value %}
   <h4>Edit Transmitter</h4>
 {% else %}

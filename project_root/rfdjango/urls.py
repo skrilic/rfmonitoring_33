@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^transmitters/(?P<service>[A-Z]{2,3})/$',
         TransmitterList.as_view(), name='transmitter_list'),
     url(r'^transmitters/$', TransmitterList.as_view(), name='transmitter_list_all'),
+    path('transmitter/<int:pk>/', TransmitterDetail.as_view(), name='transmitter_detail'),
     path('transmitter/add/', TransmitterCreate.as_view(),
          name='create-transmitter'),
     path('transmitter/edit/<int:pk>', TransmitterUpdate.as_view(),

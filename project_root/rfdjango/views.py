@@ -185,6 +185,15 @@ class TransmitterCreate(LoginRequiredMixin, CreateView):
         return super(TransmitterCreate, self).form_valid(form)
 
 
+class TransmitterDetail(LoginRequiredMixin, DetailView):
+    login_url = reverse_lazy('login')
+    model = Transmitter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+
 class TransmitterUpdate(LoginRequiredMixin, UpdateView):
     login_url = reverse_lazy('login')
     success_url = reverse_lazy('rfdjango:transmitter_list_all')
