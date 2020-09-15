@@ -100,10 +100,6 @@ class LicenseeAdmin(admin.ModelAdmin):
     search_fields = ['organization__name',
                      'organization__area__name',
                      ]
-
-    class Media:
-        js = ('admin/js/collapse.js',)
-
     ordering = ['organization__name',
                 'organization__countryCode', 'organization__area__name']
     unique_together = ['organization__name', 'licence_type']
