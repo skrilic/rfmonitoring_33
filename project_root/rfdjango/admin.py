@@ -86,7 +86,7 @@ class LicenseeAdmin(admin.ModelAdmin):
         'city',
         'contact',
         'licence_type',
-        # 'licence_issued',
+        'licence_issued',
         'licence_valid_to',
         'technician',
         'stream_url',

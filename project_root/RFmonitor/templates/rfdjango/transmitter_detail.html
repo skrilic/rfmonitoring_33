@@ -1,11 +1,48 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h2>UNDER CONSTRUCTION ...</h2>
-    <p>{{ object.name }}</p>
-    <p>Call Sign: {{ object.callsign }}</p>
-    <p>Licence: {{ object.licence_type }}</p>
-    <p>Frequency Tx (MHz): {{ object.frequency }}</p>
-    <p>Frequency Rx (MHz): {{ object.frequency_rx }}</p>
-<h2>TO BE CONTINUED ...</h2>
+<div class="container">
+    <table class="table table-condensed">
+        <thead>
+            <th></th>
+            <th>{{ object.name }}</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Call Sign:</strong></td><td>{{ object.callsign }}</td>
+            </tr>
+            <tr>
+                <td><strong>Licence:</strong></td><td>{{ object.licence_type }}</td>
+            </tr>
+            <tr>
+                <td><strong>Frequency Tx:</strong></td><td>{{ object.frequency }} MHz</td>
+            </tr>
+            <tr>
+                <td><strong>Frequency Rx:</strong></td><td>{{ object.frequency_rx }} MHz</td>
+            </tr>
+            <tr>
+                <td><strong>ERP:</strong></td><td>{{ object.erp }} W</td>
+            </tr>
+            <tr>
+                <td><strong>Transmitter power:</strong></td><td>{{ object.transmitter_power }} W</td>
+            </tr>
+            
+            <tr>
+                <td><strong>Licence issuing date:</strong></td><td>{{ object.licence_issuing_date }}</td>
+            </tr>
+            <tr>
+                <td><strong>Licence expiration date:</strong></td><td>{{ object.licence_expiration_date }}</td>
+            </tr>
+            <tr>
+                <td><strong>Antenna:</strong></td><td>{{ object.antenna }}</td>
+            </tr>
+            <tr>
+                <td><strong>Antenna direction:</strong></td><td>{{ object.antenna_direction }}°</td>
+            </tr>
+            <tr>
+                <td><strong>Antenna tilt:</strong></td><td>{{ object.antenna_tilt }}°</td>
+            </tr>
+        </tbody>
+    </table>
+
 {% endblock %}
