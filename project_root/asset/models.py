@@ -60,8 +60,8 @@ class UsedbyPerson(models.Model):
 
     # show_image.allow_tags = True
 
-    # def __str__(self):
-    #     return '%s %s' % (self.first_name, self.last_name)
+    def __str__(self):
+        return '%s %s <email: %s>' % (self.first_name, self.last_name, self.email)
 
 
 class Category(models.Model):
