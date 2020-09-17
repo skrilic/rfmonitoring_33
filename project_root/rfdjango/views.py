@@ -96,21 +96,6 @@ def show_txmap(request):
     )
 
 
-def show_detailmap(request, name, lat, lon):
-    assert isinstance(request, HttpRequest)
-    return render(
-        request,
-        'rfdjango/detailmap.html',
-        context={
-            'user': request.user,
-            'title': name,
-            'name': name,
-            'latitude': lat,
-            'longitude': lon
-        }
-    )
-
-
 def distance(gps1, gps2):
     """Calculate distance between two gps points."""
     # I've got this code from http://www.androidsnippets.com/calculate-distance-between-two-gps-coordinates

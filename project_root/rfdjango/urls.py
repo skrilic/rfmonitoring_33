@@ -16,8 +16,6 @@ router.register(r'rest_monitoringsystems', restapi_views.monitorstationViewSet)
 urlpatterns = [
     url(r'^show_txmap/$', show_txmap),
     # url(r'^transmitters/(?P<name>[-\w]+)/(?P<lat>\d+\.\d{6})/(?P<lon>\d+\.\d{6})/$', show_detailmap),
-    path('transmitters/<slug:name>/<str:lat>/<str:lon>/',
-         show_detailmap, name='show_detailmap'),
 
     # # Class-based View (C.B.V.)
     url(r'^transmitters/(?P<service>[A-Z]{2,3})/$',

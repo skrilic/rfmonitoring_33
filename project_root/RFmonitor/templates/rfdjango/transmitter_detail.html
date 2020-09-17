@@ -1,6 +1,39 @@
 {% extends "layout.html" %}
 
 {% block content %}
+
+<div id="detailmapid" style="width: 100%; height: 480px"></div>
+<script>
+
+  mapLink =
+      '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+  var map = L.map('detailmapid', {
+      center: [{{ object.tower.latitude }}, {{ object.tower.longitude }}], zoom: 10
+     });
+
+     let service = "{{ object.licence_type }}";
+     if ( service === "AT") {
+        L.marker(
+        [
+            {{ object.tower.latitude }}, {{ object.tower.longitude }}
+        ],
+            {title: "{{ object.name }}" }).bindPopup( "{{ object.callsign }}<br>Tx: {{object.frequency}}MHz<br>Rx: {{object.frequency_rx}}MHz" ).addTo(map);
+        }
+    else {
+        L.marker(
+        [
+            {{ object.tower.latitude }}, {{ object.tower.longitude }}
+        ],
+            {title: "{{ object.name }}" }).bindPopup( "{{ object.callsign }}<br> {{object.frequency}}MHz" ).addTo(map);
+    }
+    
+  L.tileLayer(
+  'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; ' + mapLink,
+      maxZoom: 20,
+  }).addTo(map);
+</script>
+
 <div class="container">
     <table class="table table-condensed">
         <thead>
