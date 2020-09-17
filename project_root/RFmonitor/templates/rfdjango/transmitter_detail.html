@@ -1,11 +1,91 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<h2>UNDER CONSTRUCTION ...</h2>
-    <p>{{ object.name }}</p>
-    <p>Call Sign: {{ object.callsign }}</p>
-    <p>Licence: {{ object.licence_type }}</p>
-    <p>Frequency Tx (MHz): {{ object.frequency }}</p>
-    <p>Frequency Rx (MHz): {{ object.frequency_rx }}</p>
-<h2>TO BE CONTINUED ...</h2>
+
+<div id="detailmapid" style="width: 100%; height: 480px"></div>
+<script>
+
+  mapLink =
+      '<a href="http://openstreetmap.org">OpenStreetMap</a>';
+  var map = L.map('detailmapid', {
+      center: [{{ object.tower.latitude }}, {{ object.tower.longitude }}], zoom: 10
+     });
+
+     let service = "{{ object.licence_type }}";
+     if ( service === "AT") {
+        L.marker(
+        [
+            {{ object.tower.latitude }}, {{ object.tower.longitude }}
+        ],
+            {title: "{{ object.name }}" }).bindPopup( "{{ object.callsign }}<br>Tx: {{object.frequency}}MHz<br>Rx: {{object.frequency_rx}}MHz" ).addTo(map);
+        }
+    else {
+        L.marker(
+        [
+            {{ object.tower.latitude }}, {{ object.tower.longitude }}
+        ],
+            {title: "{{ object.name }}" }).bindPopup( "{{ object.callsign }}<br> {{object.frequency}}MHz" ).addTo(map);
+    }
+    
+  L.tileLayer(
+  'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; ' + mapLink,
+      maxZoom: 20,
+  }).addTo(map);
+</script>
+
+<div class="container">
+    <table class="table table-condensed">
+        <thead>
+            <th class="info"></th>
+            <th class="info">{{ object.name }}</th>
+        </thead>
+        <tbody>
+            <tr>
+                <td><strong>Call Sign:</strong></td><td>{{ object.callsign }}</td>
+            </tr>
+            <tr>
+                <td><strong>Organization:</strong></td><td>{{ object.organization }}</td>
+            </tr>
+            <tr>
+                <td><strong>Coordinates:</strong></td><td>{{ object.tower.latitude }},{{ object.tower.longitude }}</td>
+            </tr>
+            <tr>
+                <td><strong>Licence:</strong></td><td>{{ object.licence_type }}</td>
+            </tr>
+            <tr>
+                <td><strong>Frequency Tx:</strong></td><td>{{ object.frequency }} MHz</td>
+            </tr>
+            {% if object.licence_type == "AT" %}
+            <tr>
+                <td><strong>Frequency Rx:</strong></td><td>{{ object.frequency_rx }} MHz</td>
+            </tr>
+            {% endif %}
+            <tr>
+                <td><strong>ERP:</strong></td><td>{{ object.erp }} W</td>
+            </tr>
+            <tr>
+                <td><strong>Transmitter power:</strong></td><td>{{ object.transmitter_power }} W</td>
+            </tr> 
+            <tr>
+                <td><strong>Licence issuing date:</strong></td><td>{{ object.licence_issuing_date }}</td>
+            </tr>
+            <tr>
+                <td><strong>Licence expiration date:</strong></td><td>{{ object.licence_expiration_date }}</td>
+            </tr>
+            <tr>
+                <td><strong>Antenna:</strong></td><td>{{ object.antenna }}</td>
+            </tr>
+            <tr>
+                <td><strong>Antenna height:</strong></td><td>{{ object.antenna_height }} m</td>
+            </tr>
+            <tr>
+                <td><strong>Antenna direction:</strong></td><td>{{ object.antenna_direction }}°</td>
+            </tr>
+            <tr>
+                <td><strong>Antenna tilt:</strong></td><td>{{ object.antenna_tilt }}°</td>
+            </tr>
+        </tbody>
+    </table>
+
 {% endblock %}

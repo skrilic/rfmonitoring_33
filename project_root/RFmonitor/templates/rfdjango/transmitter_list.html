@@ -30,7 +30,6 @@
           <ul class="dropdown-menu" aria-labelledby="about-us">
               <li><span class="glyphicon glyphicon-pencil"></span><a href="{% url 'rfdjango:update-transmitter' pk=item.id %}">Edit</a></li>
               <li><a href="{% url 'rfdjango:transmitter_detail' pk=item.id %}">Detail</a></li>
-              <li><a href="{% url 'rfdjango:show_detailmap' name=item.name|slugify lat=item.tower.latitude lon=item.tower.longitude %}">Map</a></li>
           </ul>
         </div>
       </td>
