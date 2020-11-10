@@ -1,6 +1,8 @@
 
 # README
-RFmonitor project - RF from administratory perspective. 
+## Python Django project
+RFmonitor project - RF from administratory perspective.
+
 
 
 ## Description
