@@ -1,6 +1,6 @@
 
 # README
-RFmonitor project - RF administration from administratory perspective. 
+RFmonitor project - RF from administratory perspective. 
 
 
 ## Description
