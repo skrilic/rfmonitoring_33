@@ -12,7 +12,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LOCAL_STATIC_CDN_PATH = os.path.join(
     os.path.dirname(os.path.dirname(BASE_DIR)), 'static_cdn')
 
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '$SERVER_IPv4_ADDRESS']
 
@@ -22,7 +22,8 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
-SECRET_KEY = os.environ.get("RFMONITORING_SECRET_KEY")
+SECRET_KEY = os.environ.get(
+    "RFMONITORING_SECRET_KEY", '+%-16!s7xdyp1*h$#ck(%#)y_=n49+t0784d^6hlpd%cap!he7')
 
 DATABASES = {
     'default': {

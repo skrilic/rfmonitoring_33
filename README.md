@@ -15,3 +15,25 @@ RFmonitor project - RF from administratory perspective.
  
 * "Base Stations" - Handling data provided by mobile operators about installed base stations in the format suitable for import in ATDI ICS Telecom for further analysis and prediction.
 
+
+## INSTALL
+
+  Project was developed for Python3.x and Django3.x. Initially the SQLite has been choosen for the database backend. Pipfile is included in the project tree and to use it you must have ```pipenv``` installed then you can start with installing and activating environment in the base ```rfmonitoring_33``` folder:
+* ```pipenv install```
+* ```pipenv shell```
+
+When the environment is activated go to the ```project_root``` folder and initiate creating database infrastructure:
+* ```python manage.py makemigrations admin asset rfdjango base_stations```
+* ```python manage.py migrate```
+
+Crate super user for Web site and for further settings.
+* ```python manage.py createsuperuser```
+
+
+### CHANGE SETTINGS
+
+Initially project use development settings with ```DEBUG=True```. The secret key is inside the file but for production it is needfull to switch ```DEBUG=False``` and to set environment variable ```RFMONITORING_SECRET_KEY``` so the django can find it in production. The selection between development and production is made by editing file ```project_root/RFmonitor/settings/__init__.py```
+
+### SETTING HOME PAGE MAP
+Navigate to the ```Map definitions``` on admin site inside ```RFdjango``` application. Add ```name``` as __home_page__, set the central point of your map and zoom you want. The map should appear on the front page of the site.
+
