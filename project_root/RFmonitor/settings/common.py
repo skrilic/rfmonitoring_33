@@ -4,10 +4,8 @@ TIME_ZONE = 'Europe/Paris'
 LANGUAGE_CODE = 'en-us'
 
 LANGUAGES = [
-    ('hr-BA', 'Hrvatski'),
-    ('bs-BA', 'Bosanski'),
-    ('sr-BA', 'Srpski'),
     ('en-US', 'English'),
+    ('hr-HR', 'Hrvatski'),
 ]
 
 SITE_ID = 1

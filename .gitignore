@@ -14,7 +14,10 @@ db.sqlite3
 **.pyc
 /project_root/RFmonitor/static/*
 /project_root/RFmonitor/media/*
-/project_root/RFmonitor/settings/dev_settings.py
+/project_root/RFmonitor/settings/development_postgresql.py
+/project_root/RFmonitor/settings/development_sqlite.py
+/project_root/RFmonitor/settings/heroku.py
+/project_root/RFmonitor/settings/linode.py
 /monitoring.sqbpro
 /Pipfile.lock
 /project_root/RFmonitor/settings/__init__.py

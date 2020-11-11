@@ -17,7 +17,7 @@ DEBUG = False
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '$SERVER_IPv4_ADDRESS']
 
 ADMINS = (
-    # ('Slaven Krilic', 'skrilic@gmail.com'),
+    # ('Administrator', 'info@admin.email'),
 )
 
 MANAGERS = ADMINS
