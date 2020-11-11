@@ -36,4 +36,4 @@ Initially project use development settings with ```DEBUG=True```. The secret key
 
 ### SETTING HOME PAGE MAP
 Navigate to the ```Map definitions``` on the admin site inside ```RFdjango``` application. Add ```name``` as __home_page__, set the center point of your map and zoom you want. The map should appear on the front page of the site.
-![Admin site -> RFdjango -> Map definitions](https://github.com/skrilic/rfmonitoring_33/tree/master/images/map_definitions.png?raw=true)
+![Admin site -> RFdjango -> Map definitions](https://github.com/skrilic/rfmonitoring_33/blob/master/images/map_definitions.png?raw=true)
