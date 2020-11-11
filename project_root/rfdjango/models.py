@@ -173,7 +173,7 @@ class MapDefinition(models.Model):
                             help_text='Name of the page where the map resists (without extension .htm*)')
     description = models.CharField(max_length=256, blank=True, null=True)
     # script = models.TextField(blank=True, null=True)
-    map_lat = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Lattitude of the central map point',
+    map_lat = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Latitude of the central map point',
                                   blank=True, null=True)
     map_lon = models.DecimalField(max_digits=5, decimal_places=2, verbose_name='Longitude of the central map point',
                                   blank=True, null=True)
