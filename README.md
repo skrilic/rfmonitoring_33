@@ -35,7 +35,7 @@ Crate super user for Web site and for further settings.
 
 ### CHANGE SETTINGS
 
-Initially project use development settings with ```DEBUG=True```. The secret key is inside the file but for production it is needful to switch ```DEBUG=False``` and to set environment variable ```RFMONITORING_SECRET_KEY``` so the django can find it in production. The selection between development and production is made by editing file ```project_root/RFmonitor/settings/__init__.py```
+Initially, the project uses the development setting as it is stated in the ```project_root/RFmonitor/settings/__init__.py``` file. To switch to the production just edit the file and put ```from .production import *``` instead, then edit the file ```project_root/RFmonitor/settings/production.py``` and accommodate your situation. For the production, it is important to set the environment variable ```RFMONITORING_SECRET_KEY```.
 
 ### SETTING HOME PAGE MAP
 Navigate to the ```Map definitions``` on the admin site inside ```RFdjango``` application. Add ```name``` as __home_page__, set the center point of your map and zoom you want. The map should appear on the front page of the site.
